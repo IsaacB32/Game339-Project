@@ -32,4 +32,15 @@ public class StringServiceTests
         // Act & Assert
         Assert.Throws<System.ArgumentNullException>(() => _svc.Reverse(null));
     }
+
+
+    [TestCase("Good Job", "Job Good")]
+    [TestCase("This all worked first try", "try first worked all This")]
+    [TestCase("correct reverse", "reverse correct")]
+    [TestCase("i am good at programming", "programming at good am i")]
+    public void ReverseWords_ReturnsExpectedString(string input, string expected)
+    {
+        var result = _svc.ReverseWords(input);
+        Asset.That(result, Is.EqualTo(expected));
+    }
 }

@@ -24,7 +24,8 @@ namespace Game.Runtime
         {
             var gameState = ServiceResolver.Resolve<GameState>();
             var stringService = ServiceResolver.Resolve<IStringService>();
-            var reversedString = stringService.Reverse(gameState.GoodGuy.Name.Value);
+            // var reversedString = stringService.Reverse(gameState.GoodGuy.Name.Value);
+            var reversedString = stringService.ReverseWords(gameState.GoodGuy.Name.Value);
             gameState.GoodGuy.Name.Value = reversedString;
         }
     }
