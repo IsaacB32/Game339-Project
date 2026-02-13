@@ -41,6 +41,6 @@ public class StringServiceTests
     public void ReverseWords_ReturnsExpectedString(string input, string expected)
     {
         var result = _svc.ReverseWords(input);
-        Asset.That(result, Is.EqualTo(expected));
+        Assert.That(result, Is.EqualTo(expected));
     }
 }
