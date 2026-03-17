@@ -29,7 +29,7 @@ public class FillToLineMinigame : MonoBehaviour
         _fillButtonText.text = "Hold to Pour"; 
         _liquidFiller.SetActive(false);
         _slider.value = 0f;
-        _scoreText.gameObject.SetActive(false);
+        // _scoreText.gameObject.SetActive(false);
     }
 
     public void ButtonDown()
@@ -52,8 +52,8 @@ public class FillToLineMinigame : MonoBehaviour
 
         float finalFill = _slider.value;
         float score = Mathf.Round(Mathf.Abs(PerfectScoreFillAmount - finalFill) * ScoreMultiplier);
-        _scoreText.gameObject.SetActive(true);
-        _scoreText.text = score.ToString();
+        // _scoreText.gameObject.SetActive(true);
+        // _scoreText.text = score.ToString();
     }
 
     IEnumerator FillCup()
