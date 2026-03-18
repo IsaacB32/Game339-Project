@@ -1,0 +1,585 @@
+fileFormatVersion: 2
+guid: 3123f68f3a6d23042b14d886e4a219a0
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8980740707370055465
+    second: Espresso_0
+  - first:
+      213: 3305926088919291664
+    second: Espresso_1
+  - first:
+      213: -4701361442260041983
+    second: Espresso_2
+  - first:
+      213: -1064438146662203447
+    second: Espresso_3
+  - first:
+      213: -3067038453380034287
+    second: Espresso_4
+  - first:
+      213: 1979874538088491634
+    second: Espresso_5
+  - first:
+      213: -7484634763166396567
+    second: Espresso_6
+  - first:
+      213: 6966083342189501681
+    second: Espresso_7
+  - first:
+      213: 501284938765064305
+    second: Espresso_8
+  - first:
+      213: 3031002131701758420
+    second: Espresso_9
+  - first:
+      213: -5223440245643925131
+    second: Espresso_10
+  - first:
+      213: -3801352660703788583
+    second: Espresso_11
+  - first:
+      213: 1007147064558404812
+    second: Espresso_12
+  - first:
+      213: 5345015385568713005
+    second: Espresso_13
+  - first:
+      213: 2047903348918700699
+    second: Espresso_14
+  - first:
+      213: 4274702776283963002
+    second: Espresso_15
+  - first:
+      213: 9023628432331015553
+    second: Espresso_16
+  - first:
+      213: -2080772686720148097
+    second: Espresso_17
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Espresso_0
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 1851
+        width: 75
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d8415d98effd5380800000000000000
+      internalID: -8980740707370055465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Espresso_1
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 48
+        width: 2004
+        height: 1809
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0171bb7234201ed20800000000000000
+      internalID: 3305926088919291664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Espresso_2
+      rect:
+        serializedVersion: 2
+        x: 622
+        y: 1851
+        width: 75
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10f3f595da861ceb0800000000000000
+      internalID: -4701361442260041983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Espresso_3
+      rect:
+        serializedVersion: 2
+        x: 1223
+        y: 1851
+        width: 75
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9cff2de252b5a31f0800000000000000
+      internalID: -1064438146662203447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Espresso_4
+      rect:
+        serializedVersion: 2
+        x: 1824
+        y: 1851
+        width: 75
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 111d1d9c6c0bf65d0800000000000000
+      internalID: -3067038453380034287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Espresso_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1334
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27aea9e076de97b10800000000000000
+      internalID: 1979874538088491634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Espresso_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 733
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96f4de3965c312890800000000000000
+      internalID: -7484634763166396567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Espresso_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 132
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fc98fe44ef7ca060800000000000000
+      internalID: 6966083342189501681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Espresso_8
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 0
+        width: 61
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1785852fefbe4f600800000000000000
+      internalID: 501284938765064305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Espresso_9
+      rect:
+        serializedVersion: 2
+        x: 546
+        y: 0
+        width: 26
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d9f88d3168401a20800000000000000
+      internalID: 3031002131701758420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Espresso_10
+      rect:
+        serializedVersion: 2
+        x: 566
+        y: 0
+        width: 35
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5792ae485cc9287b0800000000000000
+      internalID: -5223440245643925131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Espresso_11
+      rect:
+        serializedVersion: 2
+        x: 692
+        y: 0
+        width: 61
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d1c3c045e1ee3bc0800000000000000
+      internalID: -3801352660703788583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Espresso_12
+      rect:
+        serializedVersion: 2
+        x: 1147
+        y: 0
+        width: 26
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc4c49b4bea1afd00800000000000000
+      internalID: 1007147064558404812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Espresso_13
+      rect:
+        serializedVersion: 2
+        x: 1167
+        y: 0
+        width: 35
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2912df8c2f4d2a40800000000000000
+      internalID: 5345015385568713005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Espresso_14
+      rect:
+        serializedVersion: 2
+        x: 1293
+        y: 0
+        width: 61
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9ac1aede3d9b6c10800000000000000
+      internalID: 2047903348918700699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Espresso_15
+      rect:
+        serializedVersion: 2
+        x: 1748
+        y: 0
+        width: 26
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7e18c4d68bc25b30800000000000000
+      internalID: 4274702776283963002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Espresso_16
+      rect:
+        serializedVersion: 2
+        x: 1768
+        y: 0
+        width: 35
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 185843eff3e5a3d70800000000000000
+      internalID: 9023628432331015553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Espresso_17
+      rect:
+        serializedVersion: 2
+        x: 1894
+        y: 0
+        width: 61
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7dd5bd044c9f13e0800000000000000
+      internalID: -2080772686720148097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Espresso_0: -8980740707370055465
+      Espresso_1: 3305926088919291664
+      Espresso_10: -5223440245643925131
+      Espresso_11: -3801352660703788583
+      Espresso_12: 1007147064558404812
+      Espresso_13: 5345015385568713005
+      Espresso_14: 2047903348918700699
+      Espresso_15: 4274702776283963002
+      Espresso_16: 9023628432331015553
+      Espresso_17: -2080772686720148097
+      Espresso_2: -4701361442260041983
+      Espresso_3: -1064438146662203447
+      Espresso_4: -3067038453380034287
+      Espresso_5: 1979874538088491634
+      Espresso_6: -7484634763166396567
+      Espresso_7: 6966083342189501681
+      Espresso_8: 501284938765064305
+      Espresso_9: 3031002131701758420
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
