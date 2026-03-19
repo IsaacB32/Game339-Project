@@ -1,9 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
-using UnityEngine.UI;
 
-public class GrindBeanMinigame : MinigameBase
+public class GrindBeanMinigame : MonoBehaviour
 {
     private float baseTickerSpeed;
     private float baseGreenZoneWidth;
@@ -28,9 +27,6 @@ public class GrindBeanMinigame : MinigameBase
     [Header("Timer")]
     public float timeLimit = 5f;
     public TextMeshProUGUI timerText;
-    
-    [Header("Button")]
-    public Button inputButton;
 
     [Header("Score Display")]
     public TextMeshProUGUI scoreText;
@@ -59,13 +55,12 @@ public class GrindBeanMinigame : MinigameBase
     private int totalScore;
     private bool minigameActive;
 
-    new void Awake()
+    void Start()
     {
-        base.Awake();
-        inputButton.onClick.AddListener(RegisterPress);
+        StartMinigame();
     }
 
-    protected override void BeginMinigame()
+    public void StartMinigame()
     {
         baseTickerSpeed = tickerSpeed;
         baseGreenZoneWidth = greenZoneWidth;
@@ -103,8 +98,8 @@ public class GrindBeanMinigame : MinigameBase
 
         ticker.anchoredPosition = new Vector2(tickerPos * bar.rect.width, 0f);
 
-        // if (Keyboard.current.spaceKey.wasPressedThisFrame)
-        //     RegisterPress();
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            RegisterPress();
     }
 
     void RegisterPress()
@@ -186,7 +181,7 @@ public class GrindBeanMinigame : MinigameBase
             (zone == "GREEN" ? greenPoints : zone == "YELLOW" ? yellowPoints : -missPenalty));
     }
 
-    new void EndMinigame()
+    void EndMinigame()
     {
         minigameActive = false;
 
@@ -202,7 +197,7 @@ public class GrindBeanMinigame : MinigameBase
         }
 
         Debug.Log("Minigame ended. Grade: " + grade + " | Score: " + totalScore);
-        base.EndMinigame();
+        // TODO: fire an event or call MinigameManager with grade + score
     }
 
     public void ApplyDifficulty(float curseLevel)
