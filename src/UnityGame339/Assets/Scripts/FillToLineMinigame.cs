@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FillToLineMinigame : MonoBehaviour
+public class FillToLineMinigame : MinigameBase
 {
     [Header("References")]
     [SerializeField] private Button _startFillButton;
@@ -22,14 +22,20 @@ public class FillToLineMinigame : MonoBehaviour
 
     private bool _filling = false;
 
-    private void Awake()
+    new void Awake()
     {
+        base.Awake();
         _fillButtonText = _startFillButton.GetComponentInChildren<TextMeshProUGUI>();
         _startFillButton.interactable = true;
         _fillButtonText.text = "Hold to Pour"; 
         _liquidFiller.SetActive(false);
         _slider.value = 0f;
         // _scoreText.gameObject.SetActive(false);
+    }
+
+    protected override void BeginMinigame()
+    {
+        
     }
 
     public void ButtonDown()
@@ -52,8 +58,16 @@ public class FillToLineMinigame : MonoBehaviour
 
         float finalFill = _slider.value;
         float score = Mathf.Round(Mathf.Abs(PerfectScoreFillAmount - finalFill) * ScoreMultiplier);
-        // _scoreText.gameObject.SetActive(true);
-        // _scoreText.text = score.ToString();
+        _scoreText.gameObject.SetActive(true);
+        _scoreText.text = score.ToString();
+
+        StartCoroutine(WaitToEnd());
+    }
+
+    IEnumerator WaitToEnd()
+    {
+        yield return new WaitForSeconds(3f);
+        EndMinigame();
     }
 
     IEnumerator FillCup()
