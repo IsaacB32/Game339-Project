@@ -51,14 +51,12 @@ public class OrderScreenManager : MonoBehaviour
     void ShowOrderScreen()
     {
         orderScreenPanel.SetActive(true);
-        minigamePanel.SetActive(false);
         makeButton.interactable = false;
     }
 
     void ShowMinigamePanel()
     {
         orderScreenPanel.SetActive(false);
-        minigamePanel.SetActive(true);
     }
 
     void PickRandomOrder()
