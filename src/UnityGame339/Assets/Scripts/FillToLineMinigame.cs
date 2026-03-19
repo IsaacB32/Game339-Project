@@ -35,7 +35,7 @@ public class FillToLineMinigame : MinigameBase
 
     protected override void BeginMinigame()
     {
-        
+    
     }
 
     public void ButtonDown()
