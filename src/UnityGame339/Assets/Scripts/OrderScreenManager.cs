@@ -16,6 +16,12 @@ public class OrderScreenManager : MonoBehaviour
     public float slideOnScreenX = 0f;
     public float slideDuration = 0.5f;
 
+    [Header("Sign")]
+    public RectTransform signRect;
+    public float signSlideOffset = 80f;
+    public float signOnScreenY = 0f;
+    public float signSlideDuration = 0.4f;
+
     [Header("Order Display")]
     public TextMeshProUGUI orderText;
     public Image drinkIcon;
@@ -72,6 +78,7 @@ public class OrderScreenManager : MonoBehaviour
     void OnMakePressed()
     {
         makeButton.interactable = false;
+        makeButton.gameObject.SetActive(false);
         ShowMinigamePanel();
 
         PlayMinigame(0);
@@ -79,10 +86,15 @@ public class OrderScreenManager : MonoBehaviour
 
     IEnumerator CustomerEnter()
     {
+        // reset positions
         customerImage.anchoredPosition = new Vector2(slideInX, customerImage.anchoredPosition.y);
+        signRect.anchoredPosition = new Vector2(signRect.anchoredPosition.x, signOnScreenY + signSlideOffset);
+        makeButton.gameObject.SetActive(false);
+        makeButton.interactable = false;
 
         PickRandomOrder();
 
+        // slide customer in
         float elapsed = 0f;
         while (elapsed < slideDuration)
         {
@@ -93,13 +105,31 @@ public class OrderScreenManager : MonoBehaviour
                 customerImage.anchoredPosition.y);
             yield return null;
         }
-
         customerImage.anchoredPosition = new Vector2(slideOnScreenX, customerImage.anchoredPosition.y);
+
+        // slide sign down
+        elapsed = 0f;
+        while (elapsed < signSlideDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.SmoothStep(0f, 1f, elapsed / signSlideDuration);
+            signRect.anchoredPosition = new Vector2(
+                signRect.anchoredPosition.x,
+                Mathf.Lerp(signOnScreenY + signSlideOffset, signOnScreenY, t));
+            yield return null;
+        }
+        signRect.anchoredPosition = new Vector2(signRect.anchoredPosition.x, signOnScreenY);
+
+        // pop make button in
+        makeButton.gameObject.SetActive(true);
         makeButton.interactable = true;
     }
 
     IEnumerator CustomerExit()
     {
+        makeButton.gameObject.SetActive(false);
+        makeButton.interactable = false;
+
         float elapsed = 0f;
         float currentX = customerImage.anchoredPosition.x;
 
