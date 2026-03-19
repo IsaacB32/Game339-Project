@@ -32,6 +32,7 @@ public class OrderScreenManager : MonoBehaviour
     [Header("Orders")]
     public CustomerOrder[] possibleOrders;
 
+    private int _currentMinigameIndex;
     private CustomerOrder currentOrder;
 
     void Start()
@@ -49,12 +50,14 @@ public class OrderScreenManager : MonoBehaviour
     void ShowOrderScreen()
     {
         orderScreenPanel.SetActive(true);
+        minigamePanel.SetActive(false);
         makeButton.interactable = false;
     }
 
     void ShowMinigamePanel()
     {
         orderScreenPanel.SetActive(false);
+        minigamePanel.SetActive(true);
     }
 
     void PickRandomOrder()
@@ -76,6 +79,8 @@ public class OrderScreenManager : MonoBehaviour
         makeButton.interactable = false;
         makeButton.gameObject.SetActive(false);
         ShowMinigamePanel();
+
+        PlayMinigame(0);
     }
 
     IEnumerator CustomerEnter()
@@ -139,5 +144,23 @@ public class OrderScreenManager : MonoBehaviour
 
         ShowOrderScreen();
         StartCoroutine(CustomerEnter());
+    }
+
+    private void PlayMinigame(int index)
+    {
+        _currentMinigameIndex = index;
+        minigames[index].OnMinigameEnd += EndMinigame;
+        minigames[index].StartMinigame();
+    }
+
+    private void EndMinigame()
+    {
+        minigames[_currentMinigameIndex].OnMinigameEnd -= EndMinigame;
+        _currentMinigameIndex++;
+        if (_currentMinigameIndex >= minigames.Length)
+        {
+            OnMinigamesComplete();
+        }
+        else PlayMinigame(_currentMinigameIndex);
     }
 }
