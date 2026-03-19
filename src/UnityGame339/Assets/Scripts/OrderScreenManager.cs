@@ -8,6 +8,7 @@ public class OrderScreenManager : MonoBehaviour
     [Header("Panels")]
     public GameObject orderScreenPanel;
     public GameObject minigamePanel;
+    public MinigameBase[] minigames;
 
     [Header("Customer")]
     public RectTransform customerImage;

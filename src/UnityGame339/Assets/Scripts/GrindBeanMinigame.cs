@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 
-public class GrindBeanMinigame : MonoBehaviour
+public class GrindBeanMinigame : MinigameBase
 {
     private float baseTickerSpeed;
     private float baseGreenZoneWidth;
@@ -55,12 +55,7 @@ public class GrindBeanMinigame : MonoBehaviour
     private int totalScore;
     private bool minigameActive;
 
-    void Start()
-    {
-        StartMinigame();
-    }
-
-    public void StartMinigame()
+    protected override void BeginMinigame()
     {
         baseTickerSpeed = tickerSpeed;
         baseGreenZoneWidth = greenZoneWidth;
