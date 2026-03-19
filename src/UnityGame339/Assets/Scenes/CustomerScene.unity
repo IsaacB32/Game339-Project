@@ -2079,7 +2079,7 @@ MonoBehaviour:
   yellowZoneRight: {fileID: 420235498}
   greenZoneWidth: 0.08
   yellowZoneWidth: 0.12
-  timeLimit: 60
+  timeLimit: 20
   timerText: {fileID: 533083750}
   inputButton: {fileID: 1454549920}
   scoreText: {fileID: 1822440082}
