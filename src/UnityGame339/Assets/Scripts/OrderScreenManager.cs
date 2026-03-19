@@ -8,7 +8,6 @@ public class OrderScreenManager : MonoBehaviour
     [Header("Panels")]
     public GameObject orderScreenPanel;
     public GameObject minigamePanel;
-    public MinigameBase[] minigames;
 
     [Header("Customer")]
     public RectTransform customerImage;
@@ -32,13 +31,11 @@ public class OrderScreenManager : MonoBehaviour
     [Header("Orders")]
     public CustomerOrder[] possibleOrders;
 
-    private int _currentMinigameIndex = 0;
     private CustomerOrder currentOrder;
 
     void Start()
     {
         makeButton.onClick.AddListener(OnMakePressed);
-        
         ShowOrderScreen();
         StartCoroutine(CustomerEnter());
     }
@@ -78,8 +75,6 @@ public class OrderScreenManager : MonoBehaviour
         makeButton.interactable = false;
         makeButton.gameObject.SetActive(false);
         ShowMinigamePanel();
-
-        PlayMinigame(0);
     }
 
     IEnumerator CustomerEnter()
@@ -143,23 +138,5 @@ public class OrderScreenManager : MonoBehaviour
 
         ShowOrderScreen();
         StartCoroutine(CustomerEnter());
-    }
-
-    private void PlayMinigame(int index)
-    {
-        _currentMinigameIndex = index;
-        minigames[index].OnMinigameEnd += EndMinigame;
-        minigames[index].StartMinigame();
-    }
-
-    private void EndMinigame()
-    {
-        minigames[_currentMinigameIndex].OnMinigameEnd -= EndMinigame;
-        _currentMinigameIndex++;
-        if (_currentMinigameIndex >= minigames.Length)
-        {
-            OnMinigamesComplete();
-        }
-        else PlayMinigame(_currentMinigameIndex);
     }
 }
