@@ -1,24 +1,28 @@
 using System;
 using UnityEngine;
 
-public abstract class MinigameBase : MonoBehaviour 
+public abstract class MinigameBase : MonoBehaviour
 {
-    [SerializeField] protected GameObject panel; 
+    [SerializeField] protected GameObject panel;
     protected CanvasGroup _group;
 
-    public event Action OnMinigameEnd;
+    public int Score { get; protected set; }
+    public event Action<int> OnMinigameEnd;
 
     protected void EndMinigame()
     {
         Disable();
-        OnMinigameEnd?.Invoke();
+        OnMinigameEnd?.Invoke(Score);
     }
-    
-    protected void Awake()
+
+    void Awake()
     {
         _group = panel.GetComponent<CanvasGroup>();
         Disable();
+        Init();
     }
+
+    protected virtual void Init() { }
 
     protected void Disable()
     {
@@ -26,7 +30,7 @@ public abstract class MinigameBase : MonoBehaviour
         _group.blocksRaycasts = false;
         _group.interactable = false;
     }
-    
+
     protected void Enable()
     {
         _group.alpha = 1f;
@@ -36,6 +40,7 @@ public abstract class MinigameBase : MonoBehaviour
 
     public void StartMinigame()
     {
+        Score = 0;
         Enable();
         BeginMinigame();
     }
