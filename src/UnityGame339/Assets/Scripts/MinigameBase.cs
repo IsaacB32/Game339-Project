@@ -1,18 +1,20 @@
 using System;
+using Game.Runtime;
 using UnityEngine;
 
 public abstract class MinigameBase : MonoBehaviour
 {
+    protected static ScoreService scoreService => ServiceResolver.Resolve<ScoreService>();
+    
     [SerializeField] protected GameObject panel;
     protected CanvasGroup _group;
 
-    public int Score { get; protected set; }
-    public event Action<int> OnMinigameEnd;
+    public event Action OnMinigameEnd;
 
     protected void EndMinigame()
     {
         Disable();
-        OnMinigameEnd?.Invoke(Score);
+        OnMinigameEnd?.Invoke();
     }
 
     void Awake()
@@ -40,7 +42,6 @@ public abstract class MinigameBase : MonoBehaviour
 
     public void StartMinigame()
     {
-        Score = 0;
         Enable();
         BeginMinigame();
     }

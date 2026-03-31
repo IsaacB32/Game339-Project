@@ -1,9 +1,12 @@
+using Game.Runtime;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public static ScoreService scoreService => ServiceResolver.Resolve<ScoreService>();
+    
     [Header("References")]
     public OrderScreenManager orderScreenManager;
 
@@ -21,8 +24,6 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI finalScoreText;
 
     private int _currentDay;
-    private int _dayScore;
-    private int _totalScore;
 
     void Start()
     {
@@ -31,7 +32,7 @@ public class GameManager : MonoBehaviour
         nextDayButton.onClick.AddListener(OnNextDayPressed);
 
         _currentDay = 0;
-        _totalScore = 0;
+        scoreService.TotalScore.Value = 0;
 
         StartDay();
     }
@@ -39,25 +40,23 @@ public class GameManager : MonoBehaviour
     void StartDay()
     {
         _currentDay++;
-        _dayScore = 0;
+        scoreService.DayScore.Value = 0;
 
         float curseLevel = (float)(_currentDay - 1) / (totalDays - 1);
         orderScreenManager.StartDay(curseLevel, OnDayComplete);
     }
 
-    void OnDayComplete(int dayScore)
+    void OnDayComplete()
     {
-        _dayScore = dayScore;
-        _totalScore += dayScore;
-
+        scoreService.TotalScore.Value += scoreService.DayScore.Value;
         ShowScoreScreen();
     }
 
     void ShowScoreScreen()
     {
         scoreScreenPanel.SetActive(true);
-        dayScoreText.text = "Day " + _currentDay + " Score: " + _dayScore;
-        totalScoreText.text = "Total: " + _totalScore;
+        dayScoreText.text = "Day " + _currentDay + " Score: " + scoreService.DayScore.Value;
+        totalScoreText.text = "Total: " + scoreService.TotalScore.Value;
 
         var buttonText = nextDayButton.GetComponentInChildren<TextMeshProUGUI>();
         if (_currentDay >= totalDays)
@@ -88,6 +87,6 @@ public class GameManager : MonoBehaviour
     {
         scoreScreenPanel.SetActive(false);
         finalScreenPanel.SetActive(true);
-        finalScoreText.text = "Final Score: " + _totalScore;
+        finalScoreText.text = "Final Score: " + scoreService.TotalScore.Value;
     }
 }

@@ -9,7 +9,6 @@ public class FillToLineMinigame : MinigameBase
     [SerializeField] private Button _startFillButton;
     [SerializeField] private Slider _slider;
     [SerializeField] private GameObject _liquidFiller;
-    [SerializeField] private TextMeshProUGUI _scoreText;
     private TextMeshProUGUI _fillButtonText;
 
     [Header("Values")]
@@ -37,7 +36,6 @@ public class FillToLineMinigame : MinigameBase
         _fillButtonText.text = "Hold to Pour";
         _liquidFiller.SetActive(false);
         _slider.value = 0f;
-        _scoreText.gameObject.SetActive(false);
     }
 
     public void ButtonDown()
@@ -59,11 +57,8 @@ public class FillToLineMinigame : MinigameBase
         _fillButtonText.text = "Done";
 
         float error = Mathf.Abs(PerfectScoreFillAmount - _fillAmount);
-        Score = Mathf.RoundToInt(Mathf.Max(0f, MaxScore - error * MaxScore / PerfectScoreFillAmount));
-
-        _scoreText.gameObject.SetActive(true);
-        _scoreText.text = Score.ToString();
-
+        scoreService.DayScore.Value += Mathf.RoundToInt(Mathf.Max(0f, MaxScore - error * MaxScore / PerfectScoreFillAmount));
+        
         StartCoroutine(WaitToEnd());
     }
 

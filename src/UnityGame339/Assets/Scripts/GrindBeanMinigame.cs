@@ -77,7 +77,6 @@ public class GrindBeanMinigame : MinigameBase
         if (gradeText) gradeText.gameObject.SetActive(false);
 
         UpdateZoneVisuals();
-        UpdateScoreDisplay();
     }
 
     void Update()
@@ -132,7 +131,7 @@ public class GrindBeanMinigame : MinigameBase
         }
         else
         {
-            Score = Mathf.Max(0, Score - missPenalty);
+            points = Mathf.Max(0, scoreService.DayScore.Value - missPenalty);
             tickerSpeed = baseTickerSpeed + (tickerSpeed - baseTickerSpeed) * 0.5f;
             greenZoneWidth = baseGreenZoneWidth - (baseGreenZoneWidth - greenZoneWidth) * 0.5f;
             yellowZoneWidth = baseYellowZoneWidth - (baseYellowZoneWidth - yellowZoneWidth) * 0.5f;
@@ -142,8 +141,7 @@ public class GrindBeanMinigame : MinigameBase
         RandomiseZonePosition();
         UpdateZoneVisuals();
 
-        Score += points;
-        UpdateScoreDisplay();
+        scoreService.DayScore.Value += points;
     }
 
     void RandomiseZonePosition()
@@ -171,11 +169,7 @@ public class GrindBeanMinigame : MinigameBase
         yellowZoneLeft.anchoredPosition = new Vector2(greenCenterX - (greenWidth * 0.5f + yellowWidth * 0.5f), 0f);
         yellowZoneRight.anchoredPosition = new Vector2(greenCenterX + (greenWidth * 0.5f + yellowWidth * 0.5f), 0f);
     }
-
-    void UpdateScoreDisplay()
-    {
-        if (scoreText) scoreText.text = "Score: " + Score;
-    }
+    
 
     void ShowHitFeedback(string zone)
     {
@@ -188,18 +182,15 @@ public class GrindBeanMinigame : MinigameBase
         minigameActive = false;
         grindButton.interactable = false;
 
-        string grade;
-        if (Score >= perfectThreshold) grade = "PERFECT";
-        else if (Score >= goodThreshold) grade = "GOOD";
-        else grade = "BAD";
+        string grade = scoreService.CalculateGrade(perfectThreshold, goodThreshold);
 
         if (gradeText)
         {
             gradeText.gameObject.SetActive(true);
-            gradeText.text = grade + "\n" + Score + " pts";
+            gradeText.text = grade + "\n" + scoreService.DayScore.Value + " pts";
         }
 
-        Debug.Log("Minigame ended. Grade: " + grade + " | Score: " + Score);
+        Debug.Log("Minigame ended. Grade: " + grade + " | Score: " + scoreService.DayScore.Value);
         EndMinigame();
     }
 

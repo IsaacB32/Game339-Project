@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using System.Collections;
+using Game.Runtime;
 
 public class OrderScreenManager : MonoBehaviour
 {
@@ -36,13 +37,11 @@ public class OrderScreenManager : MonoBehaviour
     
     private int _lastOrderIndex = -1;
     private int _currentMinigameIndex;
-    private int _dayScore;
-    private Action<int> _onDayComplete;
+    private Action _onDayComplete;
 
-    public void StartDay(float curseLevel, Action<int> onDayComplete)
+    public void StartDay(float curseLevel, Action onDayComplete)
     {
         _onDayComplete = onDayComplete;
-        _dayScore = 0;
 
         ApplyDifficulty(curseLevel);
         ShowOrderScreen();
@@ -177,9 +176,8 @@ public class OrderScreenManager : MonoBehaviour
         minigames[index].StartMinigame();
     }
 
-    void OnMinigameEnd(int score)
+    void OnMinigameEnd()
     {
-        _dayScore += score;
         minigames[_currentMinigameIndex].OnMinigameEnd -= OnMinigameEnd;
         _currentMinigameIndex++;
 
@@ -196,6 +194,6 @@ public class OrderScreenManager : MonoBehaviour
     IEnumerator FinishDay()
     {
         yield return StartCoroutine(CustomerExit());
-        _onDayComplete?.Invoke(_dayScore);
+        _onDayComplete?.Invoke();
     }
 }
