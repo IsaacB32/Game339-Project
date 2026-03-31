@@ -1469,7 +1469,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -141, y: -84}
-  m_SizeDelta: {x: 150, y: 150}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &363578322
 CanvasRenderer:
@@ -1499,7 +1499,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3123f68f3a6d23042b14d886e4a219a0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d2e487a84eb5c30488986c375865a5ce, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3071,7 +3071,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -159}
-  m_SizeDelta: {x: 400, y: 700}
+  m_SizeDelta: {x: 800, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &992626982
 MonoBehaviour:
@@ -3093,7 +3093,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 644cf7835390051479b3e910b77ca97c, type: 3}
+  m_Sprite: {fileID: 5883622298227391082, guid: da8415ac705eab444b6e40ca8e999799, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -4095,7 +4095,7 @@ MonoBehaviour:
   yellowZoneRight: {fileID: 1005031589}
   greenZoneWidth: 0.08
   yellowZoneWidth: 0.12
-  timeLimit: 1
+  timeLimit: 10
   timerText: {fileID: 359357655}
   scoreText: {fileID: 370018610}
   gradeText: {fileID: 696189186}
@@ -5919,6 +5919,7 @@ MonoBehaviour:
   possibleOrders:
   - {fileID: 11400000, guid: 38d54aad9080ca845b9b336ac3976627, type: 2}
   - {fileID: 11400000, guid: 79f34989fdfe8b54fabdd41e833bd958, type: 2}
+  - {fileID: 11400000, guid: 1a9d1fa9e8e9be24c9e22671c9446897, type: 2}
 --- !u!4 &2024369784
 Transform:
   m_ObjectHideFlags: 0

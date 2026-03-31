@@ -102,6 +102,8 @@ public class OrderScreenManager : MonoBehaviour
         
         customerImageRenderer.sprite = order.customerSprite;
         customerImage.sizeDelta = order.customerSize;
+        
+        
     }
 
     public void OnMakePressed()

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd89a016539e3a24fa932c6bb9e2dfb1, type: 3}
-  m_Name: Latte Order
+  m_Name: Black Order
   m_EditorClassIdentifier: Assembly-CSharp::CustomerOrder
-  orderText: Latte
-  drinkIcon: {fileID: 21300000, guid: d003d45218c8e0045813d49246f82cc8, type: 3}
+  orderText: Black
+  drinkIcon: {fileID: 21300000, guid: d2e487a84eb5c30488986c375865a5ce, type: 3}
   drinkIconSize: {x: 200, y: 200}
-  customerSprite: {fileID: 21300000, guid: 644cf7835390051479b3e910b77ca97c, type: 3}
+  customerSprite: {fileID: 5883622298227391082, guid: da8415ac705eab444b6e40ca8e999799, type: 3}
   customerSize: {x: 800, y: 800}
