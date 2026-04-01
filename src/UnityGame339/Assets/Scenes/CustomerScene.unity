@@ -4095,7 +4095,7 @@ MonoBehaviour:
   yellowZoneRight: {fileID: 1005031589}
   greenZoneWidth: 0.08
   yellowZoneWidth: 0.12
-  timeLimit: 10
+  timeLimit: 5
   timerText: {fileID: 359357655}
   scoreText: {fileID: 370018610}
   gradeText: {fileID: 696189186}
@@ -5920,6 +5920,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 38d54aad9080ca845b9b336ac3976627, type: 2}
   - {fileID: 11400000, guid: 79f34989fdfe8b54fabdd41e833bd958, type: 2}
   - {fileID: 11400000, guid: 1a9d1fa9e8e9be24c9e22671c9446897, type: 2}
+  customersPerDay: 3
 --- !u!4 &2024369784
 Transform:
   m_ObjectHideFlags: 0

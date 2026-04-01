@@ -33,8 +33,12 @@ public class OrderScreenManager : MonoBehaviour
 
     [Header("Orders")]
     public CustomerOrder[] possibleOrders;
+
+    [Header("Day Settings")]
+    public int customersPerDay = 3;
+    private int _currentCustomer;
     
-    private int _lastOrderIndex = -1;
+    private System.Collections.Generic.List<int> _usedOrdersToday = new System.Collections.Generic.List<int>();
     private int _currentMinigameIndex;
     private int _dayScore;
     private Action<int> _onDayComplete;
@@ -43,10 +47,12 @@ public class OrderScreenManager : MonoBehaviour
     {
         _onDayComplete = onDayComplete;
         _dayScore = 0;
+        _currentCustomer = 0;
+        _usedOrdersToday.Clear();
 
         ApplyDifficulty(curseLevel);
         ShowOrderScreen();
-        StartCoroutine(CustomerEnter());
+        StartCoroutine(ServeNextCustomer());
     }
 
     void ApplyDifficulty(float curseLevel)
@@ -80,30 +86,23 @@ public class OrderScreenManager : MonoBehaviour
         }
 
         int index;
-        if (possibleOrders.Length == 1)
+        if (_usedOrdersToday.Count >= possibleOrders.Length)
         {
-            index = 0;
-        }
-        else
-        {
-            do
-            {
-                index = UnityEngine.Random.Range(0, possibleOrders.Length);
-            } while (index == _lastOrderIndex);
+            _usedOrdersToday.Clear();
         }
 
-        _lastOrderIndex = index;
+        do
+        {
+            index = UnityEngine.Random.Range(0, possibleOrders.Length);
+        } while (_usedOrdersToday.Contains(index));
+
+        _usedOrdersToday.Add(index);
         CustomerOrder order = possibleOrders[index];
         orderText.text = order.orderText;
-        
         drinkIcon.sprite = order.drinkIcon;
-        drinkIcon.gameObject.SetActive(order.drinkIcon != null);
         drinkIcon.rectTransform.sizeDelta = order.drinkIconSize;
-        
         customerImageRenderer.sprite = order.customerSprite;
         customerImage.sizeDelta = order.customerSize;
-        
-        
     }
 
     public void OnMakePressed()
@@ -169,6 +168,12 @@ public class OrderScreenManager : MonoBehaviour
             yield return null;
         }
     }
+    
+    IEnumerator ServeNextCustomer()
+    {
+        _currentCustomer++;
+        yield return StartCoroutine(CustomerEnter());
+    }
 
     void PlayMinigame(int index)
     {
@@ -196,6 +201,15 @@ public class OrderScreenManager : MonoBehaviour
     IEnumerator FinishDay()
     {
         yield return StartCoroutine(CustomerExit());
-        _onDayComplete?.Invoke(_dayScore);
+
+        if (_currentCustomer < customersPerDay)
+        {
+            ShowOrderScreen();
+            yield return StartCoroutine(ServeNextCustomer());
+        }
+        else
+        {
+            _onDayComplete?.Invoke(_dayScore);
+        }
     }
 }
