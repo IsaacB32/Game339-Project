@@ -1,23 +1,37 @@
+using System;
 using Game339.Shared;
-using UnityEngine;
 
 public class ScoreService: IScoreService
 {
     public ObservableValue<int> DayScore { get; } = new ObservableValue<int>();
     public ObservableValue<int> TotalScore { get; } = new ObservableValue<int>();
+    public ObservableValue<Grade> MinigameGrade { get; } = new ObservableValue<Grade>();
 
-    public string CalculateGrade(float perfectThreshold, float goodThreshold)
+    public string GradeAsString => MinigameGrade.Value switch
     {
-        string grade;
-        if (DayScore.Value >= perfectThreshold) grade = "PERFECT";
-        else if (DayScore.Value >= goodThreshold) grade = "GOOD";
-        else grade = "BAD";
-        
-        return grade;
+        Grade.Perfect => "A+",
+        Grade.Good => "B",
+        Grade.Bad => "F",
+        _ => ""
+    };
+
+    public void SetMinigameGrade(float perfectThreshold, float goodThreshold)
+    {
+        if (DayScore.Value >= perfectThreshold) MinigameGrade.Value = Grade.Perfect;
+        if (DayScore.Value >= goodThreshold) MinigameGrade.Value = Grade.Good;
+        MinigameGrade.Value = Grade.Bad;
+    }
+
+    public enum Grade
+    {
+        Perfect,
+        Good,
+        Bad,
+        Hidden
     }
 }
 
 public interface IScoreService
 {
-    public string CalculateGrade(float perfectThreshold, float goodThreshold);
+    public void SetMinigameGrade(float perfectThreshold, float goodThreshold);     
 }

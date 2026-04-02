@@ -59,12 +59,6 @@ public class FillToLineMinigame : MinigameBase
         float error = Mathf.Abs(PerfectScoreFillAmount - _fillAmount);
         scoreService.DayScore.Value += Mathf.RoundToInt(Mathf.Max(0f, MaxScore - error * MaxScore / PerfectScoreFillAmount));
         
-        StartCoroutine(WaitToEnd());
-    }
-
-    IEnumerator WaitToEnd()
-    {
-        yield return new WaitForSeconds(3f);
         EndMinigame();
     }
 
@@ -74,7 +68,7 @@ public class FillToLineMinigame : MinigameBase
         {
             _fillAmount += _fillRate * Time.deltaTime;
             _slider.value = Mathf.Min(_fillAmount, 1f);
-            yield return null;
+            yield return null;  
         }
     }
 }

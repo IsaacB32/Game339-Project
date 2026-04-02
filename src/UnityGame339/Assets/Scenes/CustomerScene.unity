@@ -397,6 +397,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FillToLineMinigame
   panel: {fileID: 63491678}
+  perfectThreshold: 60
+  goodThreshold: 30
   _startFillButton: {fileID: 1605966004}
   _slider: {fileID: 525850456}
   _liquidFiller: {fileID: 152640311}
@@ -1508,17 +1510,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &370018610 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2257307252231539991, guid: 19ec55ed02bd181b7bdb97621c9fcca2, type: 3}
-  m_PrefabInstance: {fileID: 1995842090}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!224 &386344979 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7537019842144917660, guid: 19ec55ed02bd181b7bdb97621c9fcca2, type: 3}
@@ -4075,6 +4066,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GrindBeanMinigame
   panel: {fileID: 1446539502}
+  perfectThreshold: 60
+  goodThreshold: 30
   ticker: {fileID: 698809176}
   tickerSpeed: 400
   bar: {fileID: 784546972}
@@ -4085,14 +4078,10 @@ MonoBehaviour:
   yellowZoneWidth: 0.12
   timeLimit: 10
   timerText: {fileID: 359357655}
-  scoreText: {fileID: 370018610}
-  gradeText: {fileID: 696189186}
   grindButton: {fileID: 825275448}
   greenPoints: 10
   yellowPoints: 4
   missPenalty: 5
-  perfectThreshold: 60
-  goodThreshold: 30
   greenHitSpeedIncrease: 100
   greenHitZoneShrink: 0.005
   yellowHitSpeedIncrease: 50

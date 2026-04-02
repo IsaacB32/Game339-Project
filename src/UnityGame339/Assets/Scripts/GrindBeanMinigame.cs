@@ -28,10 +28,6 @@ public class GrindBeanMinigame : MinigameBase
     public float timeLimit = 5f;
     public TextMeshProUGUI timerText;
 
-    [Header("Score Display")]
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI gradeText;
-
     [Header("Button")]
     public Button grindButton;
 
@@ -39,10 +35,6 @@ public class GrindBeanMinigame : MinigameBase
     public int greenPoints = 10;
     public int yellowPoints = 4;
     public int missPenalty = 5;
-
-    [Header("Grade Thresholds (total points)")]
-    public int perfectThreshold = 60;
-    public int goodThreshold = 30;
 
     [Header("In-Round Scaling")]
     public float greenHitSpeedIncrease = 20f;
@@ -55,7 +47,6 @@ public class GrindBeanMinigame : MinigameBase
     private float tickerPos;
     private int tickerDirection = 1;
     private float timeRemaining;
-    private bool minigameActive;
 
     protected override void Init()
     {
@@ -70,12 +61,9 @@ public class GrindBeanMinigame : MinigameBase
         timeRemaining = timeLimit;
         tickerPos = 0f;
         tickerDirection = 1;
-        minigameActive = true;
-
+        
         grindButton.interactable = true;
-
-        if (gradeText) gradeText.gameObject.SetActive(false);
-
+        
         UpdateZoneVisuals();
     }
 
@@ -179,18 +167,7 @@ public class GrindBeanMinigame : MinigameBase
 
     void End()
     {
-        minigameActive = false;
         grindButton.interactable = false;
-
-        string grade = scoreService.CalculateGrade(perfectThreshold, goodThreshold);
-
-        if (gradeText)
-        {
-            gradeText.gameObject.SetActive(true);
-            gradeText.text = grade + "\n" + scoreService.DayScore.Value + " pts";
-        }
-
-        Debug.Log("Minigame ended. Grade: " + grade + " | Score: " + scoreService.DayScore.Value);
         EndMinigame();
     }
 
