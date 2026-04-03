@@ -15,6 +15,13 @@ public class FillToLineMinigame : MinigameBase
     [Header("Values")]
     [SerializeField] private float _fillRate;
 
+    [Header("Score Display")]
+    public TextMeshProUGUI gradeText;
+
+    [Header("Grade Thresholds")]
+    public int perfectThreshold = 90;
+    public int goodThreshold = 60;
+
     private const float PerfectScoreFillAmount = 0.852f;
     private const float MaxScore = 100f;
 
@@ -38,6 +45,7 @@ public class FillToLineMinigame : MinigameBase
         _liquidFiller.SetActive(false);
         _slider.value = 0f;
         _scoreText.gameObject.SetActive(false);
+        if (gradeText) gradeText.gameObject.SetActive(false);
     }
 
     public void ButtonDown()
@@ -61,15 +69,26 @@ public class FillToLineMinigame : MinigameBase
         float error = Mathf.Abs(PerfectScoreFillAmount - _fillAmount);
         Score = Mathf.RoundToInt(Mathf.Max(0f, MaxScore - error * MaxScore / PerfectScoreFillAmount));
 
+        string grade;
+        if (Score >= perfectThreshold) grade = "PERFECT";
+        else if (Score >= goodThreshold) grade = "GOOD";
+        else grade = "BAD";
+
         _scoreText.gameObject.SetActive(true);
-        _scoreText.text = Score.ToString();
+        _scoreText.text = "Score: " + Score;
+
+        if (gradeText)
+        {
+            gradeText.gameObject.SetActive(true);
+            gradeText.text = grade + "\n" + Score + " pts";
+        }
 
         StartCoroutine(WaitToEnd());
     }
 
     IEnumerator WaitToEnd()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(0f);
         EndMinigame();
     }
 
