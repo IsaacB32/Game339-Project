@@ -19,7 +19,7 @@ namespace Game339.Shared.Services.Implementation
         {
             MinigameGrade.Value = Grade.Bad;
             if (DayScore.Value >= goodThreshold) MinigameGrade.Value = Grade.Good;
-            if (DayScore.Value >= perfectThreshold) MinigameGrade.Value = Grade.Perfect;
+            else if (DayScore.Value >= perfectThreshold) MinigameGrade.Value = Grade.Perfect;
         }
 
         public enum Grade
