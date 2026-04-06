@@ -142,7 +142,7 @@ public class GrindBeanMinigame : MinigameBase
     }
 
     void UpdateZoneVisuals()
-    {
+    { 
         if (bar == null) return;
         float barWidth = bar.rect.width;
 
@@ -152,10 +152,10 @@ public class GrindBeanMinigame : MinigameBase
 
         greenZone.sizeDelta = new Vector2(greenWidth, greenZone.sizeDelta.y);
         yellowZoneLeft.sizeDelta = new Vector2(yellowWidth, yellowZoneLeft.sizeDelta.y);
-        yellowZoneRight.sizeDelta = new Vector2(yellowWidth, yellowZoneRight.sizeDelta.y);
+        yellowZoneRight.sizeDelta = new Vector2(yellowWidth, yellowZoneRight.sizeDelta.y); 
 
         yellowZoneLeft.anchoredPosition = new Vector2(greenCenterX - (greenWidth * 0.5f + yellowWidth * 0.5f), 0f);
-        yellowZoneRight.anchoredPosition = new Vector2(greenCenterX + (greenWidth * 0.5f + yellowWidth * 0.5f), 0f);
+        yellowZoneRight.anchoredPosition = new Vector2(greenCenterX + (greenWidth * 0.5f + yellowWidth * 0.5f), 0f); 
     }
     
 
