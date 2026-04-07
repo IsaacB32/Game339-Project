@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 3d38933b4f566b94c9e97824a7a88634
+guid: d003d45218c8e0045813d49246f82cc8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -734796840722011684
-    second: Park_0
+      213: -8728907249309422477
+    second: Latte_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Park_0
+      name: Latte_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 800
-        height: 453
+        x: 27
+        y: 56
+        width: 289
+        height: 230
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cd96fae9a2a7dc5f0800000000000000
-      internalID: -734796840722011684
+      spriteID: 37c649fba11bcd680800000000000000
+      internalID: -8728907249309422477
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Park_0: -734796840722011684
+      Latte_0: -8728907249309422477
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -10,38 +9,38 @@ public class FillToLineMinigame : MinigameBase
     [SerializeField] private Button _startFillButton;
     [SerializeField] private Slider _slider;
     [SerializeField] private GameObject _liquidFiller;
-    [SerializeField] private TextMeshProUGUI _scoreText;
     private TextMeshProUGUI _fillButtonText;
 
     [Header("Values")]
     [SerializeField] private float _fillRate;
 
     private const float PerfectScoreFillAmount = 0.852f;
-    private const float ScoreMultiplier = 10000f;
+    private const float MaxScore = 100f;
 
-
+    private float _fillAmount;
     private bool _filling = false;
+    private bool _poured = false;
 
-    new void Awake()
+    protected override void Init()
     {
-        base.Awake();
         _fillButtonText = _startFillButton.GetComponentInChildren<TextMeshProUGUI>();
-        _startFillButton.interactable = true;
-        _fillButtonText.text = "Hold to Pour"; 
-        _liquidFiller.SetActive(false);
-        _slider.value = 0f;
-        // _scoreText.gameObject.SetActive(false);
+        _slider.maxValue = 1f;
     }
 
     protected override void BeginMinigame()
     {
-    
+        _fillAmount = 0f;
+        _filling = false;
+        _poured = false;
+        _startFillButton.interactable = true;
+        _fillButtonText.text = "Hold to Pour";
+        _liquidFiller.SetActive(false);
+        _slider.value = 0f;
     }
 
     public void ButtonDown()
     {
-        if (!_startFillButton.interactable) return;
-        _startFillButton.interactable = true;
+        if (_poured || !_startFillButton.interactable) return;
         _fillButtonText.text = "Filling...";
         _liquidFiller.SetActive(true);
         _filling = true;
@@ -50,23 +49,16 @@ public class FillToLineMinigame : MinigameBase
 
     public void ButtonUp()
     {
-        if (!_startFillButton.interactable) return;
-        _fillButtonText.text = "stop";
+        if (_poured || !_filling) return;
+        _poured = true;
+        _filling = false;
         _startFillButton.interactable = false;
         _liquidFiller.SetActive(false);
-        _filling = false;
+        _fillButtonText.text = "Done";
 
-        float finalFill = _slider.value;
-        float score = Mathf.Round(Mathf.Abs(PerfectScoreFillAmount - finalFill) * ScoreMultiplier);
-        _scoreText.gameObject.SetActive(true);
-        _scoreText.text = score.ToString();
-
-        StartCoroutine(WaitToEnd());
-    }
-
-    IEnumerator WaitToEnd()
-    {
-        yield return new WaitForSeconds(3f);
+        float error = Mathf.Abs(PerfectScoreFillAmount - _fillAmount);
+        scoreService.DayScore.Value += Mathf.RoundToInt(Mathf.Max(0f, MaxScore - error * MaxScore / PerfectScoreFillAmount));
+        
         EndMinigame();
     }
 
@@ -74,8 +66,9 @@ public class FillToLineMinigame : MinigameBase
     {
         while (_filling)
         {
-            _slider.value += _fillRate * Time.deltaTime;
-            yield return null;
+            _fillAmount += _fillRate * Time.deltaTime;
+            _slider.value = Mathf.Min(_fillAmount, 1f);
+            yield return null;  
         }
     }
 }

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.UI;
 
@@ -29,10 +28,6 @@ public class GrindBeanMinigame : MinigameBase
     public float timeLimit = 5f;
     public TextMeshProUGUI timerText;
 
-    [Header("Score Display")]
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI gradeText;
-    
     [Header("Button")]
     public Button grindButton;
 
@@ -40,10 +35,6 @@ public class GrindBeanMinigame : MinigameBase
     public int greenPoints = 10;
     public int yellowPoints = 4;
     public int missPenalty = 5;
-
-    [Header("Grade Thresholds (total points)")]
-    public int perfectThreshold = 60;
-    public int goodThreshold = 30;
 
     [Header("In-Round Scaling")]
     public float greenHitSpeedIncrease = 20f;
@@ -56,12 +47,9 @@ public class GrindBeanMinigame : MinigameBase
     private float tickerPos;
     private int tickerDirection = 1;
     private float timeRemaining;
-    private int totalScore;
-    private bool minigameActive;
 
-    new void Awake()
+    protected override void Init()
     {
-        base.Awake();
         grindButton.onClick.AddListener(RegisterPress);
     }
 
@@ -71,15 +59,12 @@ public class GrindBeanMinigame : MinigameBase
         baseGreenZoneWidth = greenZoneWidth;
         baseYellowZoneWidth = yellowZoneWidth;
         timeRemaining = timeLimit;
-        totalScore = 0;
         tickerPos = 0f;
         tickerDirection = 1;
-        minigameActive = true;
-
-        if (gradeText) gradeText.gameObject.SetActive(false);
-
+        
+        grindButton.interactable = true;
+        
         UpdateZoneVisuals();
-        UpdateScoreDisplay();
     }
 
     void Update()
@@ -102,13 +87,12 @@ public class GrindBeanMinigame : MinigameBase
         if (tickerPos <= -0.5f) { tickerPos = -0.5f; tickerDirection = 1; }
 
         ticker.anchoredPosition = new Vector2(tickerPos * bar.rect.width, 0f);
-
-        // if (Keyboard.current.spaceKey.wasPressedThisFrame)
-        //     RegisterPress();
     }
 
     void RegisterPress()
     {
+        if (!minigameActive) return;
+
         float tickerPixelPos = tickerPos * bar.rect.width;
         float distFromZoneCenter = Mathf.Abs(tickerPixelPos - greenZone.anchoredPosition.x);
 
@@ -135,7 +119,7 @@ public class GrindBeanMinigame : MinigameBase
         }
         else
         {
-            totalScore = Mathf.Max(0, totalScore - missPenalty);
+            points = Mathf.Max(0, scoreService.DayScore.Value - missPenalty);
             tickerSpeed = baseTickerSpeed + (tickerSpeed - baseTickerSpeed) * 0.5f;
             greenZoneWidth = baseGreenZoneWidth - (baseGreenZoneWidth - greenZoneWidth) * 0.5f;
             yellowZoneWidth = baseYellowZoneWidth - (baseYellowZoneWidth - yellowZoneWidth) * 0.5f;
@@ -145,8 +129,7 @@ public class GrindBeanMinigame : MinigameBase
         RandomiseZonePosition();
         UpdateZoneVisuals();
 
-        totalScore += points;
-        UpdateScoreDisplay();
+        scoreService.DayScore.Value += points;
     }
 
     void RandomiseZonePosition()
@@ -174,11 +157,7 @@ public class GrindBeanMinigame : MinigameBase
         yellowZoneLeft.anchoredPosition = new Vector2(greenCenterX - (greenWidth * 0.5f + yellowWidth * 0.5f), 0f);
         yellowZoneRight.anchoredPosition = new Vector2(greenCenterX + (greenWidth * 0.5f + yellowWidth * 0.5f), 0f);
     }
-
-    void UpdateScoreDisplay()
-    {
-        if (scoreText) scoreText.text = "Score: " + totalScore;
-    }
+    
 
     void ShowHitFeedback(string zone)
     {
@@ -188,20 +167,7 @@ public class GrindBeanMinigame : MinigameBase
 
     void End()
     {
-        minigameActive = false;
-
-        string grade;
-        if (totalScore >= perfectThreshold) grade = "PERFECT";
-        else if (totalScore >= goodThreshold) grade = "GOOD";
-        else grade = "BAD";
-
-        if (gradeText)
-        {
-            gradeText.gameObject.SetActive(true);
-            gradeText.text = grade + "\n" + totalScore + " pts";
-        }
-
-        Debug.Log("Minigame ended. Grade: " + grade + " | Score: " + totalScore);
+        grindButton.interactable = false;
         EndMinigame();
     }
 

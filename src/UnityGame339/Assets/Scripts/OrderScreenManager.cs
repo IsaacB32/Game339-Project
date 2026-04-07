@@ -1,7 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 using System.Collections;
+using Game.Runtime;
 
 public class OrderScreenManager : MonoBehaviour
 {
@@ -12,15 +14,16 @@ public class OrderScreenManager : MonoBehaviour
 
     [Header("Customer")]
     public RectTransform customerImage;
-    public float slideInX = -300f;
+    public Image customerImageRenderer;
+    public float slideInX = -1200f;
     public float slideOnScreenX = 0f;
-    public float slideDuration = 0.5f;
+    public float slideDuration = 1f;
 
     [Header("Sign")]
     public RectTransform signRect;
-    public float signSlideOffset = 80f;
-    public float signOnScreenY = 0f;
-    public float signSlideDuration = 0.4f;
+    public float signSlideOffset = 350f;
+    public float signOnScreenY = 325f;
+    public float signSlideDuration = 0.7f;
 
     [Header("Order Display")]
     public TextMeshProUGUI orderText;
@@ -31,20 +34,27 @@ public class OrderScreenManager : MonoBehaviour
 
     [Header("Orders")]
     public CustomerOrder[] possibleOrders;
-
+    
+    private int _lastOrderIndex = -1;
     private int _currentMinigameIndex;
-    private CustomerOrder currentOrder;
+    private Action _onDayComplete;
 
-    void Start()
+    public void StartDay(float curseLevel, Action onDayComplete)
     {
-        makeButton.onClick.AddListener(OnMakePressed);
+        _onDayComplete = onDayComplete;
+
+        ApplyDifficulty(curseLevel);
         ShowOrderScreen();
         StartCoroutine(CustomerEnter());
     }
 
-    public void OnMinigamesComplete()
+    void ApplyDifficulty(float curseLevel)
     {
-        StartCoroutine(CustomerExit());
+        foreach (var minigame in minigames)
+        {
+            if (minigame is GrindBeanMinigame grind)
+                grind.ApplyDifficulty(curseLevel);
+        }
     }
 
     void ShowOrderScreen()
@@ -68,24 +78,43 @@ public class OrderScreenManager : MonoBehaviour
             return;
         }
 
-        currentOrder = possibleOrders[Random.Range(0, possibleOrders.Length)];
-        orderText.text = currentOrder.orderText;
-        drinkIcon.sprite = currentOrder.drinkIcon;
-        drinkIcon.gameObject.SetActive(currentOrder.drinkIcon != null);
+        int index;
+        if (possibleOrders.Length == 1)
+        {
+            index = 0;
+        }
+        else
+        {
+            do
+            {
+                index = UnityEngine.Random.Range(0, possibleOrders.Length);
+            } while (index == _lastOrderIndex);
+        }
+
+        _lastOrderIndex = index;
+        CustomerOrder order = possibleOrders[index];
+        orderText.text = order.orderText;
+        
+        drinkIcon.sprite = order.drinkIcon;
+        drinkIcon.gameObject.SetActive(order.drinkIcon != null);
+        drinkIcon.rectTransform.sizeDelta = order.drinkIconSize;
+        
+        customerImageRenderer.sprite = order.customerSprite;
+        customerImage.sizeDelta = order.customerSize;
+        
+        
     }
 
-    void OnMakePressed()
+    public void OnMakePressed()
     {
         makeButton.interactable = false;
         makeButton.gameObject.SetActive(false);
         ShowMinigamePanel();
-
         PlayMinigame(0);
     }
 
     IEnumerator CustomerEnter()
     {
-        // reset positions
         customerImage.anchoredPosition = new Vector2(slideInX, customerImage.anchoredPosition.y);
         signRect.anchoredPosition = new Vector2(signRect.anchoredPosition.x, signOnScreenY + signSlideOffset);
         makeButton.gameObject.SetActive(false);
@@ -93,7 +122,6 @@ public class OrderScreenManager : MonoBehaviour
 
         PickRandomOrder();
 
-        // slide customer in
         float elapsed = 0f;
         while (elapsed < slideDuration)
         {
@@ -106,7 +134,6 @@ public class OrderScreenManager : MonoBehaviour
         }
         customerImage.anchoredPosition = new Vector2(slideOnScreenX, customerImage.anchoredPosition.y);
 
-        // slide sign down
         elapsed = 0f;
         while (elapsed < signSlideDuration)
         {
@@ -119,7 +146,6 @@ public class OrderScreenManager : MonoBehaviour
         }
         signRect.anchoredPosition = new Vector2(signRect.anchoredPosition.x, signOnScreenY);
 
-        // pop make button in
         makeButton.gameObject.SetActive(true);
         makeButton.interactable = true;
     }
@@ -141,26 +167,33 @@ public class OrderScreenManager : MonoBehaviour
                 customerImage.anchoredPosition.y);
             yield return null;
         }
-
-        ShowOrderScreen();
-        StartCoroutine(CustomerEnter());
     }
 
-    private void PlayMinigame(int index)
+    void PlayMinigame(int index)
     {
         _currentMinigameIndex = index;
-        minigames[index].OnMinigameEnd += EndMinigame;
+        minigames[index].OnMinigameEnd += OnMinigameEnd;
         minigames[index].StartMinigame();
     }
 
-    private void EndMinigame()
+    void OnMinigameEnd()
     {
-        minigames[_currentMinigameIndex].OnMinigameEnd -= EndMinigame;
+        minigames[_currentMinigameIndex].OnMinigameEnd -= OnMinigameEnd;
         _currentMinigameIndex++;
+
         if (_currentMinigameIndex >= minigames.Length)
         {
-            OnMinigamesComplete();
+            StartCoroutine(FinishDay());
         }
-        else PlayMinigame(_currentMinigameIndex);
+        else
+        {
+            PlayMinigame(_currentMinigameIndex);
+        }
+    }
+
+    IEnumerator FinishDay()
+    {
+        yield return StartCoroutine(CustomerExit());
+        _onDayComplete?.Invoke();
     }
 }
