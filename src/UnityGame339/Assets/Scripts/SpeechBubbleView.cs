@@ -4,6 +4,7 @@ using Game.Runtime;
 using Game339.Shared.Diagnostics;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpeechBubbleView : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class SpeechBubbleView : MonoBehaviour
     
     private TextMeshProUGUI _text;
     private Animator _animator;
+    private Image _image;
 
     private const float TIME_PER_CHAR = 0.04f;
 
@@ -18,6 +20,9 @@ public class SpeechBubbleView : MonoBehaviour
     {
         _text = GetComponentInChildren<TextMeshProUGUI>();
         _animator = GetComponent<Animator>();
+        _image = GetComponent<Image>();
+        
+        _animator.enabled = false;
     }
 
     public void UpdateText(string text)
@@ -26,10 +31,27 @@ public class SpeechBubbleView : MonoBehaviour
         _text.text = text;
     }
 
+    public void Hide()
+    {
+        Color temp = _image.color;
+        temp.a = 0f;
+        _image.color = temp;
+        UpdateText("");
+    }
+
+    public void ShowText()
+    {
+        Color temp = _image.color;
+        temp.a = 1f;
+        _image.color = temp;
+        _text.maxVisibleCharacters = _text.text.Length;
+    }
+
     public IEnumerator TextAnimation()
     {
+        _animator.enabled = true;
         _animator.SetTrigger(Start);
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(1.3f);
         
         while (_text.maxVisibleCharacters < _text.text.Length)
         {
@@ -37,5 +59,6 @@ public class SpeechBubbleView : MonoBehaviour
             yield return new WaitForSeconds(TIME_PER_CHAR);
         }
         _text.maxVisibleCharacters = _text.text.Length;
+        _animator.enabled = false;
     }
 }

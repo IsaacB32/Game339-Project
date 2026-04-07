@@ -57,6 +57,8 @@ public class OrderScreenManager : MonoBehaviour
     
     public void StartDay(Action onDayComplete)
     {
+        speechBubble.Hide();
+
         _onDayComplete = onDayComplete;
         _currentCustomer = 0;
 
@@ -95,10 +97,7 @@ public class OrderScreenManager : MonoBehaviour
 
         foreach (var minigame in minigames)
         {
-            if (minigame is GrindBeanMinigame grind)
-                grind.ApplyDifficulty(curseLevel);
-            if (minigame is FillToLineMinigame fill)
-                fill.ApplyDifficulty(curseLevel);
+            minigame.ApplyDifficulty(curseLevel);
         }
     }
 
@@ -142,6 +141,7 @@ public class OrderScreenManager : MonoBehaviour
 
     public void OnMakePressed()
     {
+        speechBubble.Hide();
         makeButton.interactable = false;
         makeButton.gameObject.SetActive(false);
         StartCoroutine(TransitionToMinigames());
@@ -161,7 +161,7 @@ public class OrderScreenManager : MonoBehaviour
     }
 
     IEnumerator CustomerEnter()
-    {
+    { 
         float elapsed = 0f;
         while (elapsed < slideDuration)
         {
@@ -185,7 +185,8 @@ public class OrderScreenManager : MonoBehaviour
             yield return null;
         }
         signRect.anchoredPosition = new Vector2(signRect.anchoredPosition.x, signOnScreenY);
-        yield return StartCoroutine(speechBubble.TextAnimation());
+        if (!GameManager.Instance.skipDialog) yield return StartCoroutine(speechBubble.TextAnimation());
+        else speechBubble.ShowText();
 
         makeButton.gameObject.SetActive(true);
         makeButton.interactable = true;

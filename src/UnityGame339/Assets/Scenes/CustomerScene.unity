@@ -3358,6 +3358,7 @@ MonoBehaviour:
   nextDayButton: {fileID: 1973798036}
   finalScreenPanel: {fileID: 38291048}
   finalScoreText: {fileID: 339212432}
+  skipDialog: 0
 --- !u!1 &1005031588
 GameObject:
   m_ObjectHideFlags: 0
@@ -6277,11 +6278,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3034971497328163780, guid: 7998ab481aa65fb1a82c4faeb733f0e6, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 685.307
+      value: 816.223
       objectReference: {fileID: 0}
     - target: {fileID: 3034971497328163780, guid: 7998ab481aa65fb1a82c4faeb733f0e6, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 419.0458
+      value: 445.2577
       objectReference: {fileID: 0}
     - target: {fileID: 3034971497328163780, guid: 7998ab481aa65fb1a82c4faeb733f0e6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6313,11 +6314,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3034971497328163780, guid: 7998ab481aa65fb1a82c4faeb733f0e6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -93.1
+      value: -158.55795
       objectReference: {fileID: 0}
     - target: {fileID: 3034971497328163780, guid: 7998ab481aa65fb1a82c4faeb733f0e6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 293.6
+      value: 293.37
       objectReference: {fileID: 0}
     - target: {fileID: 3034971497328163780, guid: 7998ab481aa65fb1a82c4faeb733f0e6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -6339,9 +6340,29 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4357190357336529476, guid: 7998ab481aa65fb1a82c4faeb733f0e6, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 711.5408
+      objectReference: {fileID: 0}
+    - target: {fileID: 4357190357336529476, guid: 7998ab481aa65fb1a82c4faeb733f0e6, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 271.7637
+      objectReference: {fileID: 0}
+    - target: {fileID: 4357190357336529476, guid: 7998ab481aa65fb1a82c4faeb733f0e6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.6735
+      objectReference: {fileID: 0}
+    - target: {fileID: 4357190357336529476, guid: 7998ab481aa65fb1a82c4faeb733f0e6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 49.519775
+      objectReference: {fileID: 0}
     - target: {fileID: 6358222467600747073, guid: 7998ab481aa65fb1a82c4faeb733f0e6, type: 3}
       propertyPath: m_Name
       value: SpeechBubble
+      objectReference: {fileID: 0}
+    - target: {fileID: 8594774905108996874, guid: 7998ab481aa65fb1a82c4faeb733f0e6, type: 3}
+      propertyPath: m_Color.a
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

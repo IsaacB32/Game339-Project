@@ -171,7 +171,7 @@ public class GrindBeanMinigame : MinigameBase
         EndMinigame();
     }
 
-    public void ApplyDifficulty(float curseLevel)
+    public override void ApplyDifficulty(float curseLevel)
     {
         // Ticker speed: how fast the needle moves across the bar (300 = easiest, 500 = hardest)
         tickerSpeed = Mathf.Lerp(500f, 1000f, curseLevel);

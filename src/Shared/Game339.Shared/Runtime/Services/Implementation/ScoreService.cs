@@ -22,7 +22,10 @@ namespace Game339.Shared.Services.Implementation
             {
                 MinigameGrade.Value = Grade.Hidden;
                 throw new Exception($"goodThreshold is greater than perfectThreshold {goodThreshold} > {perfectThreshold}");
-            } 
+            }
+
+            goodThreshold += DayScore.Value;
+            perfectThreshold += DayScore.Value;
                 
             MinigameGrade.Value = Grade.Bad;
             if (DayScore.Value >= goodThreshold) MinigameGrade.Value = Grade.Good;

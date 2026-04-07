@@ -59,4 +59,5 @@ public abstract class MinigameBase : MonoBehaviour
     }
 
     protected abstract void BeginMinigame();
+    public abstract void ApplyDifficulty(float curseLevel);
 }
