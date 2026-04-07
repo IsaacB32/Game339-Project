@@ -27,7 +27,7 @@ public abstract class MinigameBase : MonoBehaviour
 
     protected virtual void Init() { }
 
-    protected void Disable()
+    public void Disable()
     {
         _group.alpha = 0;
         _group.blocksRaycasts = false;
