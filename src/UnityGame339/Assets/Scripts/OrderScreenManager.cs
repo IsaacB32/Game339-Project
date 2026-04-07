@@ -50,8 +50,11 @@ public class OrderScreenManager : MonoBehaviour
     private List<int> _orderQueue = new List<int>();
     private int _orderQueueIndex;
     private bool _initialized = false;
+    
+    private int _globalCustomerCount;
+    private int _totalCustomers;
 
-    public void StartDay(float curseLevel, Action<int> onDayComplete)
+    public void StartDay(Action<int> onDayComplete)
     {
         _onDayComplete = onDayComplete;
         _dayScore = 0;
@@ -59,11 +62,12 @@ public class OrderScreenManager : MonoBehaviour
 
         if (!_initialized)
         {
+            _globalCustomerCount = 0;
+            _totalCustomers = customersPerDay * FindFirstObjectByType<GameManager>().totalDays;
             ShuffleOrderQueue();
             _initialized = true;
         }
 
-        ApplyDifficulty(curseLevel);
         ShowOrderScreen();
         StartCoroutine(ServeNextCustomer());
     }
@@ -83,12 +87,18 @@ public class OrderScreenManager : MonoBehaviour
         _orderQueueIndex = 0;
     }
 
-    void ApplyDifficulty(float curseLevel)
+    void ApplyDifficulty()
     {
+        float curseLevel = (_totalCustomers > 1)
+            ? (float)(_globalCustomerCount - 1) / (_totalCustomers - 1)
+            : 0f;
+
         foreach (var minigame in minigames)
         {
             if (minigame is GrindBeanMinigame grind)
                 grind.ApplyDifficulty(curseLevel);
+            if (minigame is FillToLineMinigame fill)
+                fill.ApplyDifficulty(curseLevel);
         }
     }
 
@@ -139,23 +149,18 @@ public class OrderScreenManager : MonoBehaviour
     IEnumerator ServeNextCustomer()
     {
         _currentCustomer++;
+        _globalCustomerCount++;
         customerImage.anchoredPosition = new Vector2(slideInX, customerImage.anchoredPosition.y);
         signRect.anchoredPosition = new Vector2(signRect.anchoredPosition.x, signOnScreenY + signSlideOffset);
         makeButton.gameObject.SetActive(false);
         PickRandomOrder();
+        ApplyDifficulty();
         yield return StartCoroutine(FadeOverlay(1f, 0f));
         yield return StartCoroutine(CustomerEnter());
     }
 
     IEnumerator CustomerEnter()
     {
-        customerImage.anchoredPosition = new Vector2(slideInX, customerImage.anchoredPosition.y);
-        signRect.anchoredPosition = new Vector2(signRect.anchoredPosition.x, signOnScreenY + signSlideOffset);
-        makeButton.gameObject.SetActive(false);
-        makeButton.interactable = false;
-
-        PickRandomOrder();
-
         float elapsed = 0f;
         while (elapsed < slideDuration)
         {
@@ -168,11 +173,11 @@ public class OrderScreenManager : MonoBehaviour
         }
         customerImage.anchoredPosition = new Vector2(slideOnScreenX, customerImage.anchoredPosition.y);
 
-        elapsed = 0f;
-        while (elapsed < signSlideDuration)
+        float elapsed2 = 0f;
+        while (elapsed2 < signSlideDuration)
         {
-            elapsed += Time.deltaTime;
-            float t = Mathf.SmoothStep(0f, 1f, elapsed / signSlideDuration);
+            elapsed2 += Time.deltaTime;
+            float t = Mathf.SmoothStep(0f, 1f, elapsed2 / signSlideDuration);
             signRect.anchoredPosition = new Vector2(
                 signRect.anchoredPosition.x,
                 Mathf.Lerp(signOnScreenY + signSlideOffset, signOnScreenY, t));
@@ -228,15 +233,13 @@ public class OrderScreenManager : MonoBehaviour
         }
         else
         {
-            ShowOrderScreen();
-            yield return StartCoroutine(FadeOverlay(1f, 0f));
             _onDayComplete?.Invoke(_dayScore);
         }
     }
     
     IEnumerator TransitionToNext()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         yield return StartCoroutine(FadeOverlay(0f, 1f));
 
         minigames[_currentMinigameIndex - 1].Disable();
@@ -258,6 +261,11 @@ public class OrderScreenManager : MonoBehaviour
         ShowMinigamePanel();
         PlayMinigame(0);
         yield return StartCoroutine(FadeOverlay(1f, 0f));
+    }
+    
+    public void FadeIn()
+    {
+        StartCoroutine(FadeOverlay(1f, 0f));
     }
 
     IEnumerator FadeOverlay(float from, float to)

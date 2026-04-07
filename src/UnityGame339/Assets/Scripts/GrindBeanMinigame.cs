@@ -205,9 +205,12 @@ public class GrindBeanMinigame : MinigameBase
 
     public void ApplyDifficulty(float curseLevel)
     {
-        tickerSpeed = Mathf.Lerp(300f, 800f, curseLevel);
-        greenZoneWidth = Mathf.Lerp(0.15f, 0.05f, curseLevel);
-        yellowZoneWidth = Mathf.Lerp(0.12f, 0.04f, curseLevel);
+        // Ticker speed: how fast the needle moves across the bar (300 = easiest, 500 = hardest)
+        tickerSpeed = Mathf.Lerp(500f, 1000f, curseLevel);
+        // Green zone width as fraction of bar (0.15 = 15% easiest, 0.08 = 8% hardest)
+        greenZoneWidth = Mathf.Lerp(0.10f, 0.01f, curseLevel);
+        // Yellow zone width as fraction of bar (0.12 = 12% easiest, 0.06 = 6% hardest)
+        yellowZoneWidth = Mathf.Lerp(0.15f, 0.02f, curseLevel);
         UpdateZoneVisuals();
     }
 }

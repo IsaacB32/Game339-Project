@@ -40,9 +40,7 @@ public class GameManager : MonoBehaviour
     {
         _currentDay++;
         _dayScore = 0;
-
-        float curseLevel = (float)(_currentDay - 1) / (totalDays - 1);
-        orderScreenManager.StartDay(curseLevel, OnDayComplete);
+        orderScreenManager.StartDay(OnDayComplete);
     }
 
     void OnDayComplete(int dayScore)
@@ -61,13 +59,11 @@ public class GameManager : MonoBehaviour
 
         var buttonText = nextDayButton.GetComponentInChildren<TextMeshProUGUI>();
         if (_currentDay >= totalDays)
-        {
             buttonText.text = "Finish";
-        }
         else
-        {
             buttonText.text = "Next Day";
-        }
+
+        orderScreenManager.FadeIn();
     }
 
     void OnNextDayPressed()
