@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
         scoreService.DayScore.Value = 0;
 
         float curseLevel = (float)(_currentDay - 1) / (totalDays - 1);
-        orderScreenManager.StartDay(curseLevel, OnDayComplete);
+        orderScreenManager.StartDay(OnDayComplete);
     }
 
     void OnDayComplete()
