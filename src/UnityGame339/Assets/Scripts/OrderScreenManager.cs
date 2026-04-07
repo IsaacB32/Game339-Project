@@ -281,9 +281,5 @@ public class OrderScreenManager : MonoBehaviour
 
         transitionOverlay.alpha = to;
         transitionOverlay.blocksRaycasts = to > 0.5f;
-        
-        //TODO possible error point
-        yield return StartCoroutine(CustomerExit());
-        _onDayComplete?.Invoke();
     }
 }
