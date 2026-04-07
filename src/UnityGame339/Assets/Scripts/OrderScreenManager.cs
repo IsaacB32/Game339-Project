@@ -29,6 +29,7 @@ public class OrderScreenManager : MonoBehaviour
     [Header("Order Display")]
     public TextMeshProUGUI orderText;
     public Image drinkIcon;
+    public SpeechBubbleView speechBubble;
 
     [Header("Make Button")]
     public Button makeButton;
@@ -136,6 +137,7 @@ public class OrderScreenManager : MonoBehaviour
         drinkIcon.rectTransform.sizeDelta = order.drinkIconSize;
         customerImageRenderer.sprite = order.customerSprite;
         customerImage.sizeDelta = order.customerSize;
+        speechBubble.UpdateText(order.customerBlurp);
     }
 
     public void OnMakePressed()
@@ -183,6 +185,7 @@ public class OrderScreenManager : MonoBehaviour
             yield return null;
         }
         signRect.anchoredPosition = new Vector2(signRect.anchoredPosition.x, signOnScreenY);
+        yield return StartCoroutine(speechBubble.TextAnimation());
 
         makeButton.gameObject.SetActive(true);
         makeButton.interactable = true;
