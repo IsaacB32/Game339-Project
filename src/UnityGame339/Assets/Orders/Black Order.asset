@@ -17,3 +17,4 @@ MonoBehaviour:
   drinkIconSize: {x: 200, y: 200}
   customerSprite: {fileID: 5883622298227391082, guid: da8415ac705eab444b6e40ca8e999799, type: 3}
   customerSize: {x: 800, y: 800}
+  customerBlurp: whale is the whale
