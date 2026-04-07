@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using System.Collections;
+using Game.Runtime;
 using System.Collections.Generic;
 
 public class OrderScreenManager : MonoBehaviour
@@ -37,15 +38,14 @@ public class OrderScreenManager : MonoBehaviour
 
     [Header("Day Settings")]
     public int customersPerDay = 3;
+    private int _currentCustomer;
     
     [Header("Transition")]
     public CanvasGroup transitionOverlay;
     public float transitionDuration = 0.3f;
 
     private int _currentMinigameIndex;
-    private int _currentCustomer;
-    private int _dayScore;
-    private Action<int> _onDayComplete;
+    private Action _onDayComplete;
 
     private List<int> _orderQueue = new List<int>();
     private int _orderQueueIndex;
@@ -53,11 +53,10 @@ public class OrderScreenManager : MonoBehaviour
     
     private int _globalCustomerCount;
     private int _totalCustomers;
-
-    public void StartDay(Action<int> onDayComplete)
+    
+    public void StartDay(Action onDayComplete)
     {
         _onDayComplete = onDayComplete;
-        _dayScore = 0;
         _currentCustomer = 0;
 
         if (!_initialized)
@@ -215,9 +214,8 @@ public class OrderScreenManager : MonoBehaviour
         minigames[index].StartMinigame();
     }
 
-    void OnMinigameEnd(int score)
+    void OnMinigameEnd()
     {
-        _dayScore += score;
         minigames[_currentMinigameIndex].OnMinigameEnd -= OnMinigameEnd;
         _currentMinigameIndex++;
 
@@ -233,7 +231,7 @@ public class OrderScreenManager : MonoBehaviour
         }
         else
         {
-            _onDayComplete?.Invoke(_dayScore);
+            _onDayComplete?.Invoke();
         }
     }
     
@@ -283,5 +281,9 @@ public class OrderScreenManager : MonoBehaviour
 
         transitionOverlay.alpha = to;
         transitionOverlay.blocksRaycasts = to > 0.5f;
+        
+        //TODO possible error point
+        yield return StartCoroutine(CustomerExit());
+        _onDayComplete?.Invoke();
     }
 }
