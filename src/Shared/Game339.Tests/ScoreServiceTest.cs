@@ -14,7 +14,6 @@ public class ScoreServiceTest
     [TestCase(4, 5, 10, 2)]
     [TestCase(8, 5, 10, 1)]
     [TestCase(11, 5, 10, 0)]
-    // [TestCase(16, 10, 5, 3)]
     public void SetGrade_ReturnsCorrectValue(int value, float goodThreshold, float perfectThreshold, int expected)
     {
         ScoreService service = new ScoreService();
@@ -25,7 +24,12 @@ public class ScoreServiceTest
         Assert.That((int)service.MinigameGrade.Value, Is.EqualTo(expected));
     }
     
-    //how can I make the scripts be the same across the shared projects?
-    //how can I throw an error but still have the test pass, warning?
-    //how do I double-check that my tests actually ran?
+    [Test]
+    public void SetGrade_ReturnsErrorValue()
+    {
+        ScoreService service = new ScoreService();
+        service.DayScore.Value = 16;
+
+        Assert.Throws<Exception>(() => service.SetMinigameGrade(10, 5));
+    }
 }
