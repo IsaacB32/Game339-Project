@@ -52,19 +52,10 @@ public abstract class MinigameBase : MonoBehaviour
     
     protected void EndMinigame()
     {
+        minigameActive = false;
         scoreService.SetMinigameGrade(goodThreshold, perfectThreshold);
         Debug.Log("Minigame ended. Grade: " + scoreService.MinigameGrade.Value + " | Score: " + scoreService.DayScore.Value);
-        minigameActive = false;
-
-        StartCoroutine(Wait());
-        return;
-
-        IEnumerator Wait()
-        {
-            yield return new WaitForSeconds(3f);
-            Disable();
-            OnMinigameEnd?.Invoke();
-        }
+        OnMinigameEnd?.Invoke();
     }
 
     protected abstract void BeginMinigame();
