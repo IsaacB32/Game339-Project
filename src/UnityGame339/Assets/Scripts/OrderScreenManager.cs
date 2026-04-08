@@ -188,7 +188,7 @@ public class OrderScreenManager : MonoBehaviour
         ApplyDifficulty();
         UpdateOrderScreenScores();
         yield return StartCoroutine(FadeOverlay(1f, 0f));
-        if (slideIn) yield return StartCoroutine(captureBall.SlideIn());
+        if (slideIn && captureBall.HasCustomers) yield return StartCoroutine(captureBall.SlideIn());
         yield return StartCoroutine(CustomerEnter());
     }
 
@@ -301,7 +301,7 @@ public class OrderScreenManager : MonoBehaviour
     IEnumerator TransitionToNext()
     {
         yield return new WaitForSeconds(2f);
-        yield return StartCoroutine(captureBall.SlideOut());
+        if (captureBall.HasCustomers) yield return StartCoroutine(captureBall.SlideOut());
         yield return StartCoroutine(FadeOverlay(0f, 1f));
 
         minigames[_currentMinigameIndex - 1].Disable();
@@ -314,7 +314,7 @@ public class OrderScreenManager : MonoBehaviour
         {
             PlayMinigame(_currentMinigameIndex);
             yield return StartCoroutine(FadeOverlay(1f, 0f));
-            yield return StartCoroutine(captureBall.SlideIn());
+            if (captureBall.HasCustomers) yield return StartCoroutine(captureBall.SlideIn());
         }
     }
 
@@ -325,7 +325,7 @@ public class OrderScreenManager : MonoBehaviour
         ShowMinigamePanel();
         PlayMinigame(0);
         yield return StartCoroutine(FadeOverlay(1f, 0f));
-        yield return StartCoroutine(captureBall.SlideIn());
+        if (captureBall.HasCustomers) yield return StartCoroutine(captureBall.SlideIn());
     }
 
     public void FadeIn()

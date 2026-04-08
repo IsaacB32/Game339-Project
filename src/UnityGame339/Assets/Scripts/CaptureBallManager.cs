@@ -34,6 +34,8 @@ public class CaptureBallManager : MonoBehaviour
         _onScreenX = ballContainer.anchoredPosition.x;
     }
 
+    public bool HasCustomers => _miniCustomers.Count > 0;
+
     public IEnumerator SlideIn()
     {
         yield return Slide(_onScreenX + offScreenX, _onScreenX);
@@ -82,6 +84,7 @@ public class CaptureBallManager : MonoBehaviour
 
         rect.sizeDelta = new Vector2(targetWidth, targetHeight);
         rect.anchoredPosition = Vector2.zero;
+        rect.SetSiblingIndex(0);
 
         MiniCustomer mini = new MiniCustomer
         {
