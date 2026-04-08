@@ -17,7 +17,7 @@ public class ScoreServiceTest
     public void SetGrade_ReturnsCorrectValue(int value, float goodThreshold, float perfectThreshold, int expected)
     {
         ScoreService service = new ScoreService();
-        service.DayScore.Value = value;
+        service.MinigameScore.Value = value;
 
         service.SetMinigameGrade(goodThreshold, perfectThreshold);
 
@@ -28,7 +28,7 @@ public class ScoreServiceTest
     public void SetGrade_ReturnsErrorValue()
     {
         ScoreService service = new ScoreService();
-        service.DayScore.Value = 16;
+        service.MinigameScore.Value = 16;
 
         Assert.Throws<Exception>(() => service.SetMinigameGrade(10, 5));
     }
