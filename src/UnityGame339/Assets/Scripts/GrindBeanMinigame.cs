@@ -145,7 +145,7 @@ public class GrindBeanMinigame : MinigameBase
     }
 
     void UpdateZoneVisuals()
-    {
+    { 
         if (bar == null) return;
         float barWidth = bar.rect.width;
 
@@ -155,10 +155,10 @@ public class GrindBeanMinigame : MinigameBase
 
         greenZone.sizeDelta = new Vector2(greenWidth, greenZone.sizeDelta.y);
         yellowZoneLeft.sizeDelta = new Vector2(yellowWidth, yellowZoneLeft.sizeDelta.y);
-        yellowZoneRight.sizeDelta = new Vector2(yellowWidth, yellowZoneRight.sizeDelta.y);
+        yellowZoneRight.sizeDelta = new Vector2(yellowWidth, yellowZoneRight.sizeDelta.y); 
 
         yellowZoneLeft.anchoredPosition = new Vector2(greenCenterX - (greenWidth * 0.5f + yellowWidth * 0.5f), 0f);
-        yellowZoneRight.anchoredPosition = new Vector2(greenCenterX + (greenWidth * 0.5f + yellowWidth * 0.5f), 0f);
+        yellowZoneRight.anchoredPosition = new Vector2(greenCenterX + (greenWidth * 0.5f + yellowWidth * 0.5f), 0f); 
     }
     
 
@@ -174,7 +174,7 @@ public class GrindBeanMinigame : MinigameBase
         EndMinigame();
     }
 
-    public void ApplyDifficulty(float curseLevel)
+    public override void ApplyDifficulty(float curseLevel)
     {
         // Ticker speed: how fast the needle moves across the bar (300 = easiest, 500 = hardest)
         tickerSpeed = Mathf.Lerp(700f, 1000f, curseLevel);

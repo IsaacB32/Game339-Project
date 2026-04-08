@@ -1,3 +1,4 @@
+using System;
 
 namespace Game339.Shared.Services.Implementation
 {
@@ -18,6 +19,12 @@ namespace Game339.Shared.Services.Implementation
 
         public void SetMinigameGrade(float goodThreshold, float perfectThreshold)
         {
+            if (goodThreshold >= perfectThreshold)
+            {
+                MinigameGrade.Value = Grade.Hidden;
+                throw new Exception($"goodThreshold is greater than perfectThreshold {goodThreshold} > {perfectThreshold}");
+            }
+                
             MinigameGrade.Value = Grade.Bad;
             if (MinigameScore.Value >= perfectThreshold) MinigameGrade.Value = Grade.Perfect;
             else if (MinigameScore.Value >= goodThreshold) MinigameGrade.Value = Grade.Good;
@@ -31,5 +38,4 @@ namespace Game339.Shared.Services.Implementation
             Hidden
         }
     }
-
 }

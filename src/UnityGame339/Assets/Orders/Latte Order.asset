@@ -17,3 +17,5 @@ MonoBehaviour:
   drinkIconSize: {x: 200, y: 200}
   customerSprite: {fileID: 21300000, guid: 644cf7835390051479b3e910b77ca97c, type: 3}
   customerSize: {x: 800, y: 800}
+  customerBlurp: These kids keep putting me in their games! If this coffee isn't
+    good I'm going on stike!

@@ -846,10 +846,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f744fe51a7b78e63ad7283007efa029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FillToLineMinigame
+  panel: {fileID: 0}
+  perfectThreshold: 60
+  goodThreshold: 30
   _startFillButton: {fileID: 1983856905}
   _slider: {fileID: 496768219}
   _liquidFiller: {fileID: 1394041420}
-  _scoreText: {fileID: 0}
   _fillRate: 0.7
 --- !u!4 &693199097
 Transform:

@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using Game.Runtime;
 using System.Collections.Generic;
+using Game339.Shared.Diagnostics;
 using Game339.Shared.Services.Implementation;
 
 public class OrderScreenManager : MonoBehaviour
@@ -37,6 +38,7 @@ public class OrderScreenManager : MonoBehaviour
     [Header("Order Display")]
     public TextMeshProUGUI orderText;
     public Image drinkIcon;
+    public SpeechBubbleView speechBubble;
 
     [Header("Make Button")]
     public Button makeButton;
@@ -74,6 +76,8 @@ public class OrderScreenManager : MonoBehaviour
 
     public void StartDay(Action onDayComplete)
     {
+        speechBubble.Hide();
+
         _onDayComplete = onDayComplete;
         _currentCustomer = 0;
 
@@ -112,10 +116,7 @@ public class OrderScreenManager : MonoBehaviour
 
         foreach (var minigame in minigames)
         {
-            if (minigame is GrindBeanMinigame grind)
-                grind.ApplyDifficulty(curseLevel);
-            if (minigame is FillToLineMinigame fill)
-                fill.ApplyDifficulty(curseLevel);
+            minigame.ApplyDifficulty(curseLevel);
         }
     }
 
@@ -142,7 +143,7 @@ public class OrderScreenManager : MonoBehaviour
     {
         if (possibleOrders.Length == 0)
         {
-            Debug.LogWarning("No orders assigned to OrderScreenManager.");
+            ServiceResolver.Resolve<IGameLog>().Warn("No orders assigned to OrderScreenManager.");
             return;
         }
 
@@ -161,10 +162,12 @@ public class OrderScreenManager : MonoBehaviour
         drinkIcon.rectTransform.sizeDelta = order.drinkIconSize;
         customerImageRenderer.sprite = order.customerSprite;
         customerImage.sizeDelta = order.customerSize;
+        speechBubble.UpdateText(order.customerBlurp);
     }
 
     public void OnMakePressed()
     {
+        speechBubble.Hide();
         makeButton.interactable = false;
         makeButton.gameObject.SetActive(false);
         StartCoroutine(TransitionToMinigames());
@@ -189,7 +192,7 @@ public class OrderScreenManager : MonoBehaviour
     }
 
     IEnumerator CustomerEnter()
-    {
+    { 
         float elapsed = 0f;
         while (elapsed < slideDuration)
         {
@@ -203,7 +206,12 @@ public class OrderScreenManager : MonoBehaviour
         customerImage.anchoredPosition = new Vector2(slideOnScreenX, customerImage.anchoredPosition.y);
 
         StartCoroutine(SlideSign(orderSignRect, signOnScreenY, signSlideOffset, signSlideDuration));
-        yield return new WaitForSeconds(scoreSignDelay);
+        if (!GameManager.Instance.skipDialog) yield return StartCoroutine(speechBubble.TextAnimation());
+        else
+        {
+            speechBubble.ShowText();
+            yield return new WaitForSeconds(scoreSignDelay);
+        }
         yield return StartCoroutine(SlideSign(scoreSignRect, scoreSignOnScreenY, scoreSignSlideOffset, scoreSignSlideDuration));
 
         makeButton.gameObject.SetActive(true);

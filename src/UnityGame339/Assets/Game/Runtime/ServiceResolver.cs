@@ -17,7 +17,7 @@ namespace Game.Runtime
         {
             var container = new MiniContainer();
 
-            var logger = new UnityGameLogger();
+            UnityGameLogger logger = new UnityGameLogger();
             container.RegisterSingletonInstance<IGameLog>(logger);
 
             ScoreService scoreService = new ScoreService();
@@ -25,18 +25,7 @@ namespace Game.Runtime
             scoreService.TotalScore.Value = 0;
             container.RegisterSingletonInstance(scoreService);
 
-            // var gameState = new GameState();
-            // gameState.GoodGuy.Name.Value = "Good Sandy";
-            // gameState.GoodGuy.Health.Value = 10;
-            // gameState.GoodGuy.Damage.Value = 1;
-            // gameState.BadGuy.Name.Value = "Bad Sandy";
-            // gameState.BadGuy.Health.Value = 10;
-            // gameState.BadGuy.Damage.Value = 1;
-            // container.RegisterSingletonInstance(gameState);
-            //
-            // var damageService = new DamageService(logger);
-            // container.RegisterSingletonInstance<IDamageService>(damageService);
-            //
+
             var stringService = new StringService(logger);
             container.RegisterSingletonInstance<IStringService>(stringService);
 

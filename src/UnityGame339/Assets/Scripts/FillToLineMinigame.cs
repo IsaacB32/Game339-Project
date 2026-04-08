@@ -74,7 +74,7 @@ public class FillToLineMinigame : MinigameBase
         }
     }
     
-    public void ApplyDifficulty(float curseLevel)
+    public override void ApplyDifficulty(float curseLevel)
     {
         // Fill speed: how fast the slider fills per second (0.3 = easiest, 0.8 = hardest)
         _fillRate = Mathf.Lerp(1.0f, 2.0f, curseLevel);
