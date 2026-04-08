@@ -10,7 +10,10 @@ public class PumpButton : MonoBehaviour
     private Image _image;
     private Button _button;
 
+    [SerializeField] private int _pumpIndex;
+    public int PumpIndex => _pumpIndex;
     [SerializeField] private GameObject _pos;
+    public Vector2 Pos => _pos.transform.position;
 
     private void Awake()
     {

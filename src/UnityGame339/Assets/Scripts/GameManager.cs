@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
         nextDayButton.onClick.AddListener(OnNextDayPressed);
 
         _currentDay = 0;
+        scoreService.DayScore.Value = 0;
         scoreService.TotalScore.Value = 0;
 
         StartDay();
