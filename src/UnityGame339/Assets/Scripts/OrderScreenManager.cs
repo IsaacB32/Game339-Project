@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using Game.Runtime;
 using System.Collections.Generic;
+using Game339.Shared.Services.Implementation;
 
 public class OrderScreenManager : MonoBehaviour
 {
@@ -20,11 +21,18 @@ public class OrderScreenManager : MonoBehaviour
     public float slideOnScreenX = 0f;
     public float slideDuration = 1f;
 
-    [Header("Sign")]
-    public RectTransform signRect;
+    [Header("Order Sign")]
+    public RectTransform orderSignRect;
     public float signSlideOffset = 350f;
-    public float signOnScreenY = 325f;
+    public float signOnScreenY = -220f;
     public float signSlideDuration = 0.7f;
+
+    [Header("Score Sign")]
+    public RectTransform scoreSignRect;
+    public float scoreSignSlideOffset = 350f;
+    public float scoreSignOnScreenY = -220f;
+    public float scoreSignSlideDuration = 0.7f;
+    public float scoreSignDelay = 0.2f;
 
     [Header("Order Display")]
     public TextMeshProUGUI orderText;
@@ -39,21 +47,31 @@ public class OrderScreenManager : MonoBehaviour
     [Header("Day Settings")]
     public int customersPerDay = 3;
     private int _currentCustomer;
-    
+
     [Header("Transition")]
     public CanvasGroup transitionOverlay;
     public float transitionDuration = 0.3f;
 
+    [Header("Score Display")]
+    public TextMeshProUGUI dayScoreDisplay;
+    public TextMeshProUGUI totalScoreDisplay;
+
+    [Header("Drink Give")]
+    public DrinkGiveSequence drinkGiveSequence;
+
     private int _currentMinigameIndex;
     private Action _onDayComplete;
+    private CustomerOrder _currentOrder;
 
     private List<int> _orderQueue = new List<int>();
     private int _orderQueueIndex;
     private bool _initialized = false;
-    
+
     private int _globalCustomerCount;
     private int _totalCustomers;
-    
+
+    private static ScoreService scoreService => ServiceResolver.Resolve<ScoreService>();
+
     public void StartDay(Action onDayComplete)
     {
         _onDayComplete = onDayComplete;
@@ -114,6 +132,12 @@ public class OrderScreenManager : MonoBehaviour
         minigamePanel.SetActive(true);
     }
 
+    void UpdateOrderScreenScores()
+    {
+        if (dayScoreDisplay) dayScoreDisplay.text = "Day Score: " + scoreService.DayScore.Value;
+        if (totalScoreDisplay) totalScoreDisplay.text = "Total Score: " + (scoreService.TotalScore.Value + scoreService.DayScore.Value);
+    }
+
     void PickRandomOrder()
     {
         if (possibleOrders.Length == 0)
@@ -131,6 +155,7 @@ public class OrderScreenManager : MonoBehaviour
         _orderQueueIndex++;
 
         CustomerOrder order = possibleOrders[index];
+        _currentOrder = order;
         orderText.text = order.orderText;
         drinkIcon.sprite = order.drinkIcon;
         drinkIcon.rectTransform.sizeDelta = order.drinkIconSize;
@@ -149,11 +174,16 @@ public class OrderScreenManager : MonoBehaviour
     {
         _currentCustomer++;
         _globalCustomerCount++;
+        customerImage.gameObject.SetActive(true);
         customerImage.anchoredPosition = new Vector2(slideInX, customerImage.anchoredPosition.y);
-        signRect.anchoredPosition = new Vector2(signRect.anchoredPosition.x, signOnScreenY + signSlideOffset);
+        orderSignRect.anchoredPosition = new Vector2(orderSignRect.anchoredPosition.x, signOnScreenY + signSlideOffset);
+        scoreSignRect.anchoredPosition = new Vector2(scoreSignRect.anchoredPosition.x, scoreSignOnScreenY + scoreSignSlideOffset);
+        orderSignRect.gameObject.SetActive(true);
+        scoreSignRect.gameObject.SetActive(true);
         makeButton.gameObject.SetActive(false);
         PickRandomOrder();
         ApplyDifficulty();
+        UpdateOrderScreenScores();
         yield return StartCoroutine(FadeOverlay(1f, 0f));
         yield return StartCoroutine(CustomerEnter());
     }
@@ -172,20 +202,27 @@ public class OrderScreenManager : MonoBehaviour
         }
         customerImage.anchoredPosition = new Vector2(slideOnScreenX, customerImage.anchoredPosition.y);
 
-        float elapsed2 = 0f;
-        while (elapsed2 < signSlideDuration)
-        {
-            elapsed2 += Time.deltaTime;
-            float t = Mathf.SmoothStep(0f, 1f, elapsed2 / signSlideDuration);
-            signRect.anchoredPosition = new Vector2(
-                signRect.anchoredPosition.x,
-                Mathf.Lerp(signOnScreenY + signSlideOffset, signOnScreenY, t));
-            yield return null;
-        }
-        signRect.anchoredPosition = new Vector2(signRect.anchoredPosition.x, signOnScreenY);
+        StartCoroutine(SlideSign(orderSignRect, signOnScreenY, signSlideOffset, signSlideDuration));
+        yield return new WaitForSeconds(scoreSignDelay);
+        yield return StartCoroutine(SlideSign(scoreSignRect, scoreSignOnScreenY, scoreSignSlideOffset, scoreSignSlideDuration));
 
         makeButton.gameObject.SetActive(true);
         makeButton.interactable = true;
+    }
+
+    IEnumerator SlideSign(RectTransform sign, float targetY, float offset, float duration)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.SmoothStep(0f, 1f, elapsed / duration);
+            sign.anchoredPosition = new Vector2(
+                sign.anchoredPosition.x,
+                Mathf.Lerp(targetY + offset, targetY, t));
+            yield return null;
+        }
+        sign.anchoredPosition = new Vector2(sign.anchoredPosition.x, targetY);
     }
 
     IEnumerator CustomerExit()
@@ -224,20 +261,41 @@ public class OrderScreenManager : MonoBehaviour
 
     IEnumerator FinishDay()
     {
-        if (_currentCustomer < customersPerDay)
+        ShowOrderScreen();
+        orderSignRect.gameObject.SetActive(false);
+        scoreSignRect.gameObject.SetActive(false);
+
+        yield return StartCoroutine(FadeOverlay(1f, 0f));
+
+        drinkGiveSequence.StartSequence(customerImage, _currentOrder, () =>
         {
-            ShowOrderScreen();
-            yield return StartCoroutine(ServeNextCustomer());
-        }
-        else
-        {
-            _onDayComplete?.Invoke();
-        }
+            if (_currentCustomer < customersPerDay)
+            {
+                StartCoroutine(FadeAndServeNext());
+            }
+            else
+            {
+                StartCoroutine(FadeAndEndDay());
+            }
+        });
     }
-    
+
+    IEnumerator FadeAndServeNext()
+    {
+        yield return StartCoroutine(FadeOverlay(0f, 1f));
+        ShowOrderScreen();
+        yield return StartCoroutine(ServeNextCustomer());
+    }
+
+    IEnumerator FadeAndEndDay()
+    {
+        yield return StartCoroutine(FadeOverlay(0f, 1f));
+        _onDayComplete?.Invoke();
+    }
+
     IEnumerator TransitionToNext()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         yield return StartCoroutine(FadeOverlay(0f, 1f));
 
         minigames[_currentMinigameIndex - 1].Disable();
@@ -252,7 +310,7 @@ public class OrderScreenManager : MonoBehaviour
             yield return StartCoroutine(FadeOverlay(1f, 0f));
         }
     }
-    
+
     IEnumerator TransitionToMinigames()
     {
         yield return StartCoroutine(FadeOverlay(0f, 1f));
@@ -260,10 +318,15 @@ public class OrderScreenManager : MonoBehaviour
         PlayMinigame(0);
         yield return StartCoroutine(FadeOverlay(1f, 0f));
     }
-    
+
     public void FadeIn()
     {
         StartCoroutine(FadeOverlay(1f, 0f));
+    }
+
+    public Coroutine FadeOut()
+    {
+        return StartCoroutine(FadeOverlay(0f, 1f));
     }
 
     IEnumerator FadeOverlay(float from, float to)

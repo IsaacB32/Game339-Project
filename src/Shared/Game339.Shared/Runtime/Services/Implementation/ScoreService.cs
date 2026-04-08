@@ -6,6 +6,7 @@ namespace Game339.Shared.Services.Implementation
         public ObservableValue<int> DayScore { get; } = new ObservableValue<int>();
         public ObservableValue<int> TotalScore { get; } = new ObservableValue<int>();
         public ObservableValue<Grade> MinigameGrade { get; } = new ObservableValue<Grade>();
+        public ObservableValue<int> MinigameScore { get; } = new ObservableValue<int>();
 
         public string GradeAsString => MinigameGrade.Value switch
         {
@@ -18,8 +19,8 @@ namespace Game339.Shared.Services.Implementation
         public void SetMinigameGrade(float goodThreshold, float perfectThreshold)
         {
             MinigameGrade.Value = Grade.Bad;
-            if (DayScore.Value >= goodThreshold) MinigameGrade.Value = Grade.Good;
-            else if (DayScore.Value >= perfectThreshold) MinigameGrade.Value = Grade.Perfect;
+            if (MinigameScore.Value >= perfectThreshold) MinigameGrade.Value = Grade.Perfect;
+            else if (MinigameScore.Value >= goodThreshold) MinigameGrade.Value = Grade.Good;
         }
 
         public enum Grade

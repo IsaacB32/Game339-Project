@@ -45,6 +45,7 @@ public abstract class MinigameBase : MonoBehaviour
     public void StartMinigame()
     {
         scoreService.MinigameGrade.Value = ScoreService.Grade.Hidden;
+        scoreService.MinigameScore.Value = 0;
         Enable();
         minigameActive = true;
         BeginMinigame();

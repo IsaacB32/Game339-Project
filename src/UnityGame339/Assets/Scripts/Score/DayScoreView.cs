@@ -22,20 +22,20 @@ public class DayScoreView : MonoBehaviour
       _stampText = _stampObject.GetComponentInChildren<TextMeshProUGUI>();
       _stampAnimator = _stampObject.GetComponent<Animator>();
       _stampObject.SetActive(false);
-      
-      scoreService.DayScore.ChangeEvent += UpdateScore;
+    
+      scoreService.MinigameScore.ChangeEvent += UpdateScore;
       scoreService.MinigameGrade.ChangeEvent += UpdateGrade;
    }
 
    private void OnDestroy()
    {
-      scoreService.DayScore.ChangeEvent -= UpdateScore;
+      scoreService.MinigameScore.ChangeEvent -= UpdateScore;
       scoreService.MinigameGrade.ChangeEvent -= UpdateGrade;
    }
 
    private void UpdateScore(int score)
    {
-      _scoreText.text = score.ToString();
+      _scoreText.text = "Score: " + score;
    }
 
    private void UpdateGrade(ScoreService.Grade grade)
