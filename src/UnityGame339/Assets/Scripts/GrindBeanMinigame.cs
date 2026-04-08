@@ -119,7 +119,9 @@ public class GrindBeanMinigame : MinigameBase
         }
         else
         {
-            points = Mathf.Max(0, scoreService.DayScore.Value - missPenalty);
+            int penalty = Mathf.Min(missPenalty, scoreService.MinigameScore.Value);
+            scoreService.DayScore.Value = Mathf.Max(0, scoreService.DayScore.Value - penalty);
+            scoreService.MinigameScore.Value = Mathf.Max(0, scoreService.MinigameScore.Value - penalty);
             tickerSpeed = baseTickerSpeed + (tickerSpeed - baseTickerSpeed) * 0.5f;
             greenZoneWidth = baseGreenZoneWidth - (baseGreenZoneWidth - greenZoneWidth) * 0.5f;
             yellowZoneWidth = baseYellowZoneWidth - (baseYellowZoneWidth - yellowZoneWidth) * 0.5f;
@@ -130,6 +132,7 @@ public class GrindBeanMinigame : MinigameBase
         UpdateZoneVisuals();
 
         scoreService.DayScore.Value += points;
+        scoreService.MinigameScore.Value += points;
     }
 
     void RandomiseZonePosition()
@@ -174,11 +177,11 @@ public class GrindBeanMinigame : MinigameBase
     public void ApplyDifficulty(float curseLevel)
     {
         // Ticker speed: how fast the needle moves across the bar (300 = easiest, 500 = hardest)
-        tickerSpeed = Mathf.Lerp(500f, 1000f, curseLevel);
+        tickerSpeed = Mathf.Lerp(700f, 1000f, curseLevel);
         // Green zone width as fraction of bar (0.15 = 15% easiest, 0.08 = 8% hardest)
-        greenZoneWidth = Mathf.Lerp(0.10f, 0.01f, curseLevel);
+        greenZoneWidth = Mathf.Lerp(0.10f, 0.05f, curseLevel);
         // Yellow zone width as fraction of bar (0.12 = 12% easiest, 0.06 = 6% hardest)
-        yellowZoneWidth = Mathf.Lerp(0.15f, 0.02f, curseLevel);
+        yellowZoneWidth = Mathf.Lerp(0.15f, 0.075f, curseLevel);
         UpdateZoneVisuals();
     }
 }
