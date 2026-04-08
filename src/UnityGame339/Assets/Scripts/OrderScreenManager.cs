@@ -61,6 +61,9 @@ public class OrderScreenManager : MonoBehaviour
     [Header("Drink Give")]
     public DrinkGiveSequence drinkGiveSequence;
 
+    [Header("Capture Ball")]
+    public CaptureBallManager captureBall;
+
     private int _currentMinigameIndex;
     private Action _onDayComplete;
     private CustomerOrder _currentOrder;
@@ -173,7 +176,7 @@ public class OrderScreenManager : MonoBehaviour
         StartCoroutine(TransitionToMinigames());
     }
 
-    IEnumerator ServeNextCustomer()
+    IEnumerator ServeNextCustomer(bool slideIn = true)
     {
         _currentCustomer++;
         _globalCustomerCount++;
@@ -188,6 +191,7 @@ public class OrderScreenManager : MonoBehaviour
         ApplyDifficulty();
         UpdateOrderScreenScores();
         yield return StartCoroutine(FadeOverlay(1f, 0f));
+        if (slideIn && captureBall.HasCustomers) yield return StartCoroutine(captureBall.SlideIn());
         yield return StartCoroutine(CustomerEnter());
     }
 
@@ -274,6 +278,7 @@ public class OrderScreenManager : MonoBehaviour
         scoreSignRect.gameObject.SetActive(false);
 
         yield return StartCoroutine(FadeOverlay(1f, 0f));
+        yield return StartCoroutine(captureBall.SlideIn());
 
         drinkGiveSequence.StartSequence(customerImage, _currentOrder, () =>
         {
@@ -292,7 +297,7 @@ public class OrderScreenManager : MonoBehaviour
     {
         yield return StartCoroutine(FadeOverlay(0f, 1f));
         ShowOrderScreen();
-        yield return StartCoroutine(ServeNextCustomer());
+        yield return StartCoroutine(ServeNextCustomer(slideIn: false));
     }
 
     IEnumerator FadeAndEndDay()
@@ -304,6 +309,7 @@ public class OrderScreenManager : MonoBehaviour
     IEnumerator TransitionToNext()
     {
         yield return new WaitForSeconds(2f);
+        if (captureBall.HasCustomers) yield return StartCoroutine(captureBall.SlideOut());
         yield return StartCoroutine(FadeOverlay(0f, 1f));
 
         minigames[_currentMinigameIndex - 1].Disable();
@@ -316,15 +322,18 @@ public class OrderScreenManager : MonoBehaviour
         {
             PlayMinigame(_currentMinigameIndex);
             yield return StartCoroutine(FadeOverlay(1f, 0f));
+            if (captureBall.HasCustomers) yield return StartCoroutine(captureBall.SlideIn());
         }
     }
 
     IEnumerator TransitionToMinigames()
     {
+        yield return StartCoroutine(captureBall.SlideOut());
         yield return StartCoroutine(FadeOverlay(0f, 1f));
         ShowMinigamePanel();
         PlayMinigame(0);
         yield return StartCoroutine(FadeOverlay(1f, 0f));
+        if (captureBall.HasCustomers) yield return StartCoroutine(captureBall.SlideIn());
     }
 
     public void FadeIn()
