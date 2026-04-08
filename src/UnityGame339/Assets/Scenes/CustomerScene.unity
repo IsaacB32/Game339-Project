@@ -4313,7 +4313,7 @@ MonoBehaviour:
   yellowZoneRight: {fileID: 1005031589}
   greenZoneWidth: 0.08
   yellowZoneWidth: 0.12
-  timeLimit: 5
+  timeLimit: 15
   timerText: {fileID: 359357655}
   grindButton: {fileID: 825275448}
   greenPoints: 10

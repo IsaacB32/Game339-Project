@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,26 +15,47 @@ public class CaptureBallManager : MonoBehaviour
     public float bounceDamping = 0.7f;
     public float maxStartSpeed = 60f;
 
+    [Header("Slide")]
+    public float offScreenX = 600f;
+    public float slideDuration = 0.5f;
+
+    private float _onScreenX;
     private List<MiniCustomer> _miniCustomers = new List<MiniCustomer>();
-    
-    // void Start()
-    // {
-    //     // TEST — remove later
-    //     AddCustomer(ballContainer.GetComponent<Image>().sprite, new Vector2(400, 400));
-    //     AddCustomer(ballContainer.GetComponent<Image>().sprite, new Vector2(300, 300));
-    //     AddCustomer(ballContainer.GetComponent<Image>().sprite, new Vector2(300, 300));
-    //     AddCustomer(ballContainer.GetComponent<Image>().sprite, new Vector2(300, 300));
-    //     AddCustomer(ballContainer.GetComponent<Image>().sprite, new Vector2(300, 300));
-    //     AddCustomer(ballContainer.GetComponent<Image>().sprite, new Vector2(300, 300));
-    //     AddCustomer(ballContainer.GetComponent<Image>().sprite, new Vector2(300, 300));
-    //     AddCustomer(ballContainer.GetComponent<Image>().sprite, new Vector2(300, 300));
-    // }
 
     private class MiniCustomer
     {
         public RectTransform rect;
         public Vector2 velocity;
         public float angularVelocity;
+    }
+
+    void Awake()
+    {
+        _onScreenX = ballContainer.anchoredPosition.x;
+    }
+
+    public IEnumerator SlideIn()
+    {
+        yield return Slide(_onScreenX + offScreenX, _onScreenX);
+    }
+
+    public IEnumerator SlideOut()
+    {
+        yield return Slide(_onScreenX, _onScreenX + offScreenX);
+    }
+
+    IEnumerator Slide(float fromX, float toX)
+    {
+        float elapsed = 0f;
+        float currentY = ballContainer.anchoredPosition.y;
+        while (elapsed < slideDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.SmoothStep(0f, 1f, elapsed / slideDuration);
+            ballContainer.anchoredPosition = new Vector2(Mathf.Lerp(fromX, toX, t), currentY);
+            yield return null;
+        }
+        ballContainer.anchoredPosition = new Vector2(toX, currentY);
     }
 
     public void AddCustomer(Sprite customerSprite, Vector2 originalSize)
@@ -47,8 +69,7 @@ public class CaptureBallManager : MonoBehaviour
         img.raycastTarget = false;
 
         RectTransform rect = obj.GetComponent<RectTransform>();
-    
-        // Preserve aspect ratio within scaled size
+
         float aspect = originalSize.x / originalSize.y;
         float targetHeight = originalSize.y * customerScale;
         float targetWidth = targetHeight * aspect;
@@ -58,7 +79,7 @@ public class CaptureBallManager : MonoBehaviour
             targetWidth = maxSize;
             targetHeight = targetWidth / aspect;
         }
-    
+
         rect.sizeDelta = new Vector2(targetWidth, targetHeight);
         rect.anchoredPosition = Vector2.zero;
 
@@ -78,19 +99,15 @@ public class CaptureBallManager : MonoBehaviour
     {
         foreach (var mini in _miniCustomers)
         {
-            // Apply gravity
             mini.velocity.y += gravity * Time.deltaTime;
 
-            // Move
             Vector2 pos = mini.rect.anchoredPosition;
             pos += mini.velocity * Time.deltaTime;
 
-            // Rotate
             Vector3 rot = mini.rect.localEulerAngles;
             rot.z += mini.angularVelocity * Time.deltaTime;
             mini.rect.localEulerAngles = rot;
 
-            // Bounce off ball walls
             float dist = pos.magnitude;
             float customerRadius = Mathf.Max(mini.rect.sizeDelta.x, mini.rect.sizeDelta.y) * 0.5f;
             float maxDist = ballRadius - customerRadius;
@@ -104,8 +121,6 @@ public class CaptureBallManager : MonoBehaviour
                 if (dotVel > 0f)
                 {
                     mini.velocity -= 2f * dotVel * normal;
-        
-                    // Randomly speed up or slow down on bounce
                     float speedChange = Random.Range(0.9f, 1.10f);
                     mini.velocity *= speedChange;
                     mini.angularVelocity *= speedChange;
