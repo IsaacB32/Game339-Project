@@ -1,6 +1,6 @@
 using System;
-using System.Collections;
 using Game.Runtime;
+using Game339.Shared.Diagnostics;
 using UnityEngine;
 using Game339.Shared.Services.Implementation;
 
@@ -44,7 +44,9 @@ public abstract class MinigameBase : MonoBehaviour
 
     public void StartMinigame()
     {
+        ServiceResolver.Resolve<IGameLog>().Info("Starting Minigame >> " + gameObject.name);
         scoreService.MinigameGrade.Value = ScoreService.Grade.Hidden;
+        scoreService.MinigameScore.Value = 0;
         Enable();
         minigameActive = true;
         BeginMinigame();
@@ -54,7 +56,7 @@ public abstract class MinigameBase : MonoBehaviour
     {
         minigameActive = false;
         scoreService.SetMinigameGrade(goodThreshold, perfectThreshold);
-        Debug.Log("Minigame ended. Grade: " + scoreService.MinigameGrade.Value + " | Score: " + scoreService.DayScore.Value);
+        ServiceResolver.Resolve<IGameLog>().Info("Minigame ended >> Grade: " + scoreService.MinigameGrade.Value + " | Score: " + scoreService.DayScore.Value);
         OnMinigameEnd?.Invoke();
     }
 

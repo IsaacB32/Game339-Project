@@ -57,7 +57,9 @@ public class FillToLineMinigame : MinigameBase
         _fillButtonText.text = "Done";
 
         float error = Mathf.Abs(PerfectScoreFillAmount - _fillAmount);
-        scoreService.DayScore.Value += Mathf.RoundToInt(Mathf.Max(0f, MaxScore - error * MaxScore / PerfectScoreFillAmount));
+        int minigameScore = Mathf.RoundToInt(Mathf.Max(0f, MaxScore - error * MaxScore / PerfectScoreFillAmount));
+        scoreService.MinigameScore.Value += minigameScore;
+        scoreService.DayScore.Value += minigameScore;
         
         EndMinigame();
     }

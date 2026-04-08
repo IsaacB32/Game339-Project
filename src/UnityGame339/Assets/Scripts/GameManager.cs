@@ -4,6 +4,7 @@ using Game339.Shared.Services.Implementation;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class GameManager : MonoBehaviour
     }
 
     public static ScoreService scoreService => ServiceResolver.Resolve<ScoreService>();
-    
+
     [Header("References")]
     public OrderScreenManager orderScreenManager;
 
@@ -76,16 +77,31 @@ public class GameManager : MonoBehaviour
 
     void OnNextDayPressed()
     {
-        scoreScreenPanel.SetActive(false);
+        nextDayButton.interactable = false;
 
         if (_currentDay >= totalDays)
         {
-            ShowFinalScreen();
+            StartCoroutine(FadeAndShowFinal());
         }
         else
         {
-            StartDay();
+            StartCoroutine(FadeAndStartDay());
         }
+    }
+
+    IEnumerator FadeAndStartDay()
+    {
+        yield return orderScreenManager.FadeOut();
+        scoreScreenPanel.SetActive(false);
+        StartDay();
+    }
+
+    IEnumerator FadeAndShowFinal()
+    {
+        yield return orderScreenManager.FadeOut();
+        scoreScreenPanel.SetActive(false);
+        ShowFinalScreen();
+        orderScreenManager.FadeIn();
     }
 
     void ShowFinalScreen()
