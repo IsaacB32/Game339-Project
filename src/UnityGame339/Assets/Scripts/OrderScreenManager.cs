@@ -302,6 +302,7 @@ public class OrderScreenManager : MonoBehaviour
 
     IEnumerator FadeAndEndDay()
     {
+        if (captureBall.HasCustomers) yield return StartCoroutine(captureBall.SlideOut());
         yield return StartCoroutine(FadeOverlay(0f, 1f));
         _onDayComplete?.Invoke();
     }
