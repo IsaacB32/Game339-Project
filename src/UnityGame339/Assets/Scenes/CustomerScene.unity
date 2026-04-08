@@ -3479,7 +3479,7 @@ MonoBehaviour:
   nextDayButton: {fileID: 1973798036}
   finalScreenPanel: {fileID: 38291048}
   finalScoreText: {fileID: 339212432}
-  skipDialog: 1
+  skipDialog: 0
 --- !u!1 &1005031588
 GameObject:
   m_ObjectHideFlags: 0
