@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd89a016539e3a24fa932c6bb9e2dfb1, type: 3}
-  m_Name: Latte Order
+  m_Name: Americano Order
   m_EditorClassIdentifier: Assembly-CSharp::CustomerOrder
-  orderText: Latte
-  drinkIcon: {fileID: 21300000, guid: d003d45218c8e0045813d49246f82cc8, type: 3}
+  orderText: Americano
+  drinkIcon: {fileID: 21300000, guid: 9fbe25b8b245cbb42a258714243e6258, type: 3}
   drinkIconSize: {x: 200, y: 200}
-  customerSprite: {fileID: 21300000, guid: 7cbc9d4706c012e4faee4c987caad3a0, type: 3}
+  customerSprite: {fileID: 21300000, guid: 5149702df7d43084ba850da294f25650, type: 3}
   customerSize: {x: 500, y: 500}
   customerYPosition: -120
-  customerBlurp: I'm not Sandie, but I am a dog. Now gimme my coffee!!!
+  customerBlurp: KAWWWWW I HAVE THE AMERICAN SPIRIT WITHIN ME! NOW GIVE ME AN AMERICANO!

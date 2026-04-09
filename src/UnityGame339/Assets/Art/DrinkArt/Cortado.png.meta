@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7cbc9d4706c012e4faee4c987caad3a0
+guid: a8132cb191e72eb4194efc7aa0ec8fbb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1643777537178553556
-    second: DogArt_0
+      213: 1104403089877998981
+    second: Cortado_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DogArt_0
+      name: Cortado_0
       rect:
         serializedVersion: 2
-        x: 15
-        y: 14
-        width: 455
-        height: 481
+        x: 247
+        y: 135
+        width: 486
+        height: 693
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4dc4b4106fedfc610800000000000000
-      internalID: 1643777537178553556
+      spriteID: 58d950542c0a35f00800000000000000
+      internalID: 1104403089877998981
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      DogArt_0: 1643777537178553556
+      Cortado_0: 1104403089877998981
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

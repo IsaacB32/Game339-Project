@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7cbc9d4706c012e4faee4c987caad3a0
+guid: c8a419a53e10a1e45acd77261d3bdba5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1643777537178553556
-    second: DogArt_0
+      213: 195620578347695548
+    second: OctopusArt_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: DogArt_0
+      name: OctopusArt_0
       rect:
         serializedVersion: 2
-        x: 15
-        y: 14
-        width: 455
-        height: 481
+        x: 19
+        y: 16
+        width: 475
+        height: 432
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4dc4b4106fedfc610800000000000000
-      internalID: 1643777537178553556
+      spriteID: cbdbb2b21ebf6b200800000000000000
+      internalID: 195620578347695548
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      DogArt_0: 1643777537178553556
+      OctopusArt_0: 195620578347695548
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

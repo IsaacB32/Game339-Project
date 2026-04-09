@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     [Header("Final Screen")]
     public GameObject finalScreenPanel;
     public TextMeshProUGUI finalScoreText;
+    public BackstoryScreen endingScreen;
 
     public bool skipDialog;
 
@@ -98,6 +99,14 @@ public class GameManager : MonoBehaviour
     {
         yield return orderScreenManager.FadeOut();
         scoreScreenPanel.SetActive(false);
+        orderScreenManager.FadeIn();
+        endingScreen.Show(() => StartCoroutine(TransitionToFinal()));
+    }
+
+    IEnumerator TransitionToFinal()
+    {
+        yield return orderScreenManager.FadeOut();
+        endingScreen.panel.SetActive(false);
         ShowFinalScreen();
         orderScreenManager.FadeIn();
     }
