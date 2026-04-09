@@ -71,6 +71,7 @@ public class GameManager : MonoBehaviour
 
         var buttonText = nextDayButton.GetComponentInChildren<TextMeshProUGUI>();
         buttonText.text = _currentDay >= totalDays ? "Finish" : "Next Day";
+        nextDayButton.interactable = true;
         orderScreenManager.FadeIn();
     }
 

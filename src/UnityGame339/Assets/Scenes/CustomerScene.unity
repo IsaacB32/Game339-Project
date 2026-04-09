@@ -2212,7 +2212,7 @@ MonoBehaviour:
   storyText: {fileID: 1353098329}
   nextButton: {fileID: 1075792719}
   nextButtonText: {fileID: 393521107}
-  charsPerSecond: 30
+  charsPerSecond: 40
   finalButtonLabel: End
   pages:
   - "After capturing all of the customers, \n(you are a evil person)\nthe witch then
@@ -4255,7 +4255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   orderScreenManager: {fileID: 2024369783}
-  totalDays: 3
+  totalDays: 2
   scoreScreenPanel: {fileID: 603176910}
   dayScoreText: {fileID: 516343683}
   totalScoreText: {fileID: 1585291554}
@@ -6924,7 +6924,7 @@ MonoBehaviour:
   storyText: {fileID: 1152271352}
   nextButton: {fileID: 2102067882}
   nextButtonText: {fileID: 1800088832}
-  charsPerSecond: 30
+  charsPerSecond: 40
   finalButtonLabel: Begin
   pages:
   - You are a humble coffee shop worker, just trying to get through the day, and
