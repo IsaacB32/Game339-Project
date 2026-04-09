@@ -97,11 +97,15 @@ public class DrinkGiveSequence : MonoBehaviour
 
         Animator customerAnimator = _customerImage.GetComponent<Animator>();
         if (customerAnimator) customerAnimator.enabled = false;
+        CustomerFlipController flipController = _customerImage.GetComponent<CustomerFlipController>();
+        if (flipController) flipController.enabled = false;
 
         yield return new WaitForSeconds(pauseBeforeCapture);
 
         int originalSiblingIndex = _customerImage.GetSiblingIndex();
-        _customerImage.SetAsLastSibling();
+        Transform originalParent = _customerImage.parent;
+        _customerImage.SetParent(captureBall.ballContainer, worldPositionStays: true);
+        _customerImage.SetSiblingIndex(captureBall.CaptureSiblingIndex);
 
         Vector2 miniSize = _currentOrder.customerSize * captureBall.customerScale;
         float aspect = _currentOrder.customerSize.x / _currentOrder.customerSize.y;
@@ -135,8 +139,10 @@ public class DrinkGiveSequence : MonoBehaviour
 
         _customerImage.localScale = customerStartScale;
         _customerImage.localEulerAngles = Vector3.zero;
+        _customerImage.SetParent(originalParent, worldPositionStays: true);
         _customerImage.SetSiblingIndex(originalSiblingIndex);
         if (customerAnimator) customerAnimator.enabled = true;
+        if (flipController) flipController.enabled = true;
         _customerImage.gameObject.SetActive(false);
 
         captureBall.AddCustomer(_currentOrder.customerSprite, _currentOrder.customerSize);

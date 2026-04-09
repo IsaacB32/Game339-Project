@@ -165,6 +165,7 @@ public class OrderScreenManager : MonoBehaviour
         drinkIcon.rectTransform.sizeDelta = order.drinkIconSize;
         customerImageRenderer.sprite = order.customerSprite;
         customerImage.sizeDelta = order.customerSize;
+        customerImage.anchoredPosition = new Vector2(customerImage.anchoredPosition.x, order.customerYPosition);
         speechBubble.UpdateText(order.customerBlurp);
     }
 
@@ -181,7 +182,6 @@ public class OrderScreenManager : MonoBehaviour
         _currentCustomer++;
         _globalCustomerCount++;
         customerImage.gameObject.SetActive(true);
-        customerImage.anchoredPosition = new Vector2(slideInX, customerImage.anchoredPosition.y);
         orderSignRect.anchoredPosition = new Vector2(orderSignRect.anchoredPosition.x, signOnScreenY + signSlideOffset);
         scoreSignRect.anchoredPosition = new Vector2(scoreSignRect.anchoredPosition.x, scoreSignOnScreenY + scoreSignSlideOffset);
         orderSignRect.gameObject.SetActive(true);
@@ -190,6 +190,7 @@ public class OrderScreenManager : MonoBehaviour
         PickRandomOrder();
         ApplyDifficulty();
         UpdateOrderScreenScores();
+        customerImage.anchoredPosition = new Vector2(slideInX, _currentOrder.customerYPosition);
         yield return StartCoroutine(FadeOverlay(1f, 0f));
         if (slideIn && captureBall.HasCustomers) yield return StartCoroutine(captureBall.SlideIn());
         yield return StartCoroutine(CustomerEnter());
@@ -197,6 +198,7 @@ public class OrderScreenManager : MonoBehaviour
 
     IEnumerator CustomerEnter()
     { 
+        float targetY = _currentOrder.customerYPosition;
         float elapsed = 0f;
         while (elapsed < slideDuration)
         {
@@ -204,18 +206,16 @@ public class OrderScreenManager : MonoBehaviour
             float t = Mathf.SmoothStep(0f, 1f, elapsed / slideDuration);
             customerImage.anchoredPosition = new Vector2(
                 Mathf.Lerp(slideInX, slideOnScreenX, t),
-                customerImage.anchoredPosition.y);
+                targetY);
             yield return null;
         }
-        customerImage.anchoredPosition = new Vector2(slideOnScreenX, customerImage.anchoredPosition.y);
+        customerImage.anchoredPosition = new Vector2(slideOnScreenX, targetY);
+
+        if (!GameManager.Instance.skipDialog) yield return StartCoroutine(speechBubble.TextAnimation());
+        else speechBubble.ShowText();
 
         StartCoroutine(SlideSign(orderSignRect, signOnScreenY, signSlideOffset, signSlideDuration));
-        if (!GameManager.Instance.skipDialog) yield return StartCoroutine(speechBubble.TextAnimation());
-        else
-        {
-            speechBubble.ShowText();
-            yield return new WaitForSeconds(scoreSignDelay);
-        }
+        yield return new WaitForSeconds(scoreSignDelay);
         yield return StartCoroutine(SlideSign(scoreSignRect, scoreSignOnScreenY, scoreSignSlideOffset, scoreSignSlideDuration));
 
         makeButton.gameObject.SetActive(true);

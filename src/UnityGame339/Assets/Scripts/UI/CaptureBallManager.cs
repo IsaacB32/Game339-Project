@@ -7,7 +7,10 @@ public class CaptureBallManager : MonoBehaviour
 {
     [Header("Ball")]
     public RectTransform ballContainer;
+    public RectTransform ballOutside;
     public float ballRadius = 100f;
+
+    public int CaptureSiblingIndex => ballOutside.GetSiblingIndex();
 
     [Header("Mini Customer Settings")]
     public float customerScale = 0.08f;
@@ -82,9 +85,15 @@ public class CaptureBallManager : MonoBehaviour
             targetHeight = targetWidth / aspect;
         }
 
+        Outline outline = obj.AddComponent<Outline>();
+        outline.effectColor = Color.black;
+        float outlineDist = Mathf.Max(1f, 10f * (targetWidth / originalSize.x));
+        outline.effectDistance = new Vector2(outlineDist, outlineDist);
+
         rect.sizeDelta = new Vector2(targetWidth, targetHeight);
         rect.anchoredPosition = Vector2.zero;
-        rect.SetSiblingIndex(0);
+        rect.SetSiblingIndex(ballOutside.GetSiblingIndex());
+        rect.localScale = new Vector3(-1f, 1f, 1f);
 
         MiniCustomer mini = new MiniCustomer
         {

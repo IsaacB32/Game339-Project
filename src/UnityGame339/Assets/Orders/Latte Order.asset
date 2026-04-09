@@ -15,7 +15,7 @@ MonoBehaviour:
   orderText: Latte
   drinkIcon: {fileID: 21300000, guid: d003d45218c8e0045813d49246f82cc8, type: 3}
   drinkIconSize: {x: 200, y: 200}
-  customerSprite: {fileID: 21300000, guid: 644cf7835390051479b3e910b77ca97c, type: 3}
-  customerSize: {x: 800, y: 800}
-  customerBlurp: These kids keep putting me in their games! If this coffee isn't
-    good I'm going on stike!
+  customerSprite: {fileID: 1643777537178553556, guid: 7cbc9d4706c012e4faee4c987caad3a0, type: 3}
+  customerSize: {x: 500, y: 500}
+  customerYPosition: -120
+  customerBlurp: I'm not Sandie, but I am a dog. Now gimme my coffee!!!

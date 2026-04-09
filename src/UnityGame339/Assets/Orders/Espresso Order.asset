@@ -15,7 +15,8 @@ MonoBehaviour:
   orderText: Espresso
   drinkIcon: {fileID: 21300000, guid: 3123f68f3a6d23042b14d886e4a219a0, type: 3}
   drinkIconSize: {x: 150, y: 150}
-  customerSprite: {fileID: 21300000, guid: b98c8f422de28c64b9d99683db55c8fb, type: 3}
-  customerSize: {x: 600, y: 700}
+  customerSprite: {fileID: 21300000, guid: 6b06f2ba74221d543a8341b815a00124, type: 3}
+  customerSize: {x: 700, y: 700}
+  customerYPosition: -120
   customerBlurp: Being this big has it's struggles but at least I get to come to
-    my favorite coffee place and order my espresso
+    my favorite coffee place and order my espresso...

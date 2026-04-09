@@ -1,4 +1,3 @@
-using System;
 using Game.Runtime;
 using Game339.Shared.Services.Implementation;
 using UnityEngine;
@@ -8,13 +7,7 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
-    private void Awake()
-    {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
-    }
-
+    public static GameManager Instance { get; private set; }
     public static ScoreService scoreService => ServiceResolver.Resolve<ScoreService>();
 
     [Header("References")]
@@ -32,22 +25,27 @@ public class GameManager : MonoBehaviour
     [Header("Final Screen")]
     public GameObject finalScreenPanel;
     public TextMeshProUGUI finalScoreText;
-    
-    [Header("DEBUG")]
-    public bool skipDialog = false;
+
+    public bool skipDialog;
 
     private int _currentDay;
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
         scoreScreenPanel.SetActive(false);
         finalScreenPanel.SetActive(false);
         nextDayButton.onClick.AddListener(OnNextDayPressed);
+    }
 
+    public void StartGame()
+    {
         _currentDay = 0;
-        scoreService.DayScore.Value = 0;
         scoreService.TotalScore.Value = 0;
-
         StartDay();
     }
 
