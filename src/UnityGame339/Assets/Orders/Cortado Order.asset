@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cortado Order
   m_EditorClassIdentifier: Assembly-CSharp::CustomerOrder
   orderText: Cortado
-  drinkIcon: {fileID: 21300000, guid: 9fbe25b8b245cbb42a258714243e6258, type: 3}
+  drinkIcon: {fileID: 21300000, guid: a8132cb191e72eb4194efc7aa0ec8fbb, type: 3}
   drinkIconSize: {x: 200, y: 200}
   customerSprite: {fileID: 21300000, guid: c8a419a53e10a1e45acd77261d3bdba5, type: 3}
   customerSize: {x: 500, y: 500}
